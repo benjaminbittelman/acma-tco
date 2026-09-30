@@ -1,0 +1,10 @@
+{
+  "name": "ACMA · TCO de enfierradura",
+  "short_name": "ACMA TCO",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#09266A",
+  "theme_color": "#09266A",
+  "lang": "es-CL",
+  "description": "Evaluador TCO ACMA: enfierradura tradicional vs malla electrosoldada."
+}
