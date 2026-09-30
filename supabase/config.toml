@@ -1,0 +1,2 @@
+[functions.tco-api]
+verify_jwt = false
