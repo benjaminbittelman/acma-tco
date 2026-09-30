@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="theme-color" content="#09266A">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,6 +50,86 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .adminTabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);margin-bottom:14px}.adminTabs button{border:0;background:#fff;padding:9px 12px;font-size:10px;font-weight:800;color:var(--slate);border-bottom:3px solid transparent}.adminTabs button.on{color:var(--navy);border-bottom-color:var(--orange)}.adminPane{display:none}.adminPane.on{display:block}.historyTools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.historyTools input{flex:1;min-width:220px;border:1px solid var(--rule);padding:10px}.histList{display:grid;gap:8px}.histItem{border:1px solid var(--rule);padding:12px;display:grid;grid-template-columns:1.3fr .75fr auto;gap:12px;align-items:center}.histItem b{font-size:12px;color:var(--navy)}.histItem .sub{font-size:10px;color:var(--slate);line-height:1.45;margin-top:3px}.histItem .money{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:16px;font-weight:800;color:var(--green)}.histItem .acts{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.histItem .acts button{border:1px solid var(--rule);background:#fff;color:var(--slate);padding:6px 8px;font-size:9px;font-weight:800}.empty{text-align:center;padding:35px;color:var(--muted);font-size:11px}.configGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.toast{position:fixed;right:20px;bottom:102px;background:var(--ink);color:#fff;padding:11px 14px;font-size:11px;box-shadow:var(--shadow);z-index:200;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}.toast.on{opacity:1;transform:none}.successBox{background:#EFF9F3;border-left:4px solid var(--green);padding:14px 15px;font-size:11.5px;line-height:1.5;color:#355B43;margin-top:14px;display:none}.successBox.show{display:block}
 @media(max-width:850px){.types{grid-template-columns:repeat(2,1fr)}.validationGrid{grid-template-columns:1fr}.dimensionLayout{grid-template-columns:1fr}.calcCard{position:static}.internalGrid{grid-template-columns:repeat(2,1fr)}.assumptions{grid-template-columns:1fr}.histItem{grid-template-columns:1fr auto}.histItem .acts{grid-column:1/-1;justify-content:flex-start}.resultWrap{padding-top:20px}.gate.active{align-items:flex-start}}
 @media(max-width:590px){.graphTabs{flex-wrap:wrap}.graphTabs button{flex:1 1 30%}.canvas,.resultWrap{padding:20px 16px}.stage{background-size:auto,58px 58px}body{overflow:auto}.shell{min-height:100dvh;height:auto;grid-template-rows:auto auto minmax(660px,1fr) auto}.top{height:62px;padding:0 14px}.logoText{display:none}.session b{max-width:180px}.progressWrap{height:58px}.gate{padding:16px 14px 20px}.types,.formGrid,.configGrid{grid-template-columns:1fr}.type{min-height:105px}.title{font-size:38px}.dimensionLayout{gap:18px}.internalGrid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.metric:nth-child(3){grid-column:1/-1;border-left:0;border-top:1px solid var(--rule)}.footer{height:auto;min-height:74px;padding:10px 14px;position:sticky;bottom:0}.btn{padding:0 14px}.stepText{display:none}.heroMetric{font-size:66px}.graphTitle{display:block}.graphTitle p{margin-top:5px}.finalTools{flex-wrap:wrap}}
+
+/* V13 · Responsive real para iPhone/iPad */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
+body{min-width:0}
+@media(max-width:850px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  body{overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .shell{display:flex;flex-direction:column;width:100%;height:auto;min-height:100svh;overflow:visible}
+  .top{height:auto;min-height:64px;flex:0 0 auto;padding:calc(8px + env(safe-area-inset-top)) 16px 8px;gap:10px}
+  .logoMark{font-size:20px}.logoLine{height:22px}.session b{max-width:180px}
+  .progressWrap{height:62px;flex:0 0 auto;padding:8px 20px}
+  .progress{width:100%;max-width:660px}
+  .pnode{width:30px;height:30px;flex:0 0 30px}
+  .stage{flex:1;overflow:visible;min-height:0;background-size:auto,60px 60px}
+  .gate{position:relative;inset:auto;overflow:visible;min-height:0;padding:16px 14px 24px}
+  .gate.active{display:block;animation:none}
+  .canvas,.canvas.narrow,.resultWrap{width:100%;max-width:720px;margin:0 auto;padding:26px 20px;overflow:hidden}
+  .canvas:before,.resultWrap:before{height:4px}
+  .title{font-size:clamp(34px,7.2vw,52px);line-height:1.02;overflow-wrap:anywhere}
+  .sub{font-size:16px;line-height:1.5}
+  .formGrid,.validationGrid{grid-template-columns:1fr}
+  .field input,.field select,.field textarea,.internalGrid .field input,.dataInput input{font-size:16px!important}
+  .dimensionLayout{grid-template-columns:1fr;gap:18px}
+  .calcCard{position:static}
+  .modeToggle button{font-size:12px;padding:12px 8px;line-height:1.25}
+  .quick{flex-wrap:wrap}.quick button{flex:1 1 18%;font-size:11px;min-height:34px}
+  .internalGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .footer{position:sticky;bottom:0;height:auto;min-height:72px;padding:9px 14px calc(9px + env(safe-area-inset-bottom));flex:0 0 auto}
+  .btn{min-height:48px}
+  .resultWrap{overflow:visible}
+  .resultHead .title{font-size:clamp(32px,7vw,48px);line-height:1.02}
+  .heroMetric{font-size:clamp(44px,9vw,74px);line-height:.95;white-space:nowrap;letter-spacing:-.065em;max-width:100%;overflow:hidden}
+  .resultSentence{font-size:15px;line-height:1.5}
+  .metrics{max-width:100%}
+  .metric{padding:16px 10px 8px}.metric b{font-size:30px}
+  .graphTabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+  .graphTabs button{grid-column:span 2;min-width:0;padding:11px 6px;font-size:9px;line-height:1.25;white-space:normal}
+  .graphTabs button:nth-last-child(-n+2){grid-column:span 3}
+  .graphPanel{padding:14px 14px;overflow:hidden}
+  .graphTitle{display:block}.graphTitle b{font-size:16px}.graphTitle p{margin-top:6px;font-size:12px}
+  .chart{min-height:0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  .chart svg{display:block;width:100%;height:auto;max-height:none}
+  .chart button{font-size:11px!important;line-height:1.2!important;padding:8px 10px!important}
+  .chart>div[style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
+  .scopeNote{font-size:11px;line-height:1.45}
+  .finalTools.show{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .finalTools .btn{width:100%;min-height:46px;font-size:11px;white-space:normal}
+  .finalTools .btn.green{grid-column:1/-1}
+  .modal{padding:10px}.modalCard{max-height:94dvh}.modalBody{padding:14px}
+}
+@media(max-width:590px){
+  .top{min-height:58px;padding-left:12px;padding-right:12px}
+  .logoText{display:none}.logoMark{font-size:18px}.session b{max-width:145px;font-size:11px}.session span{font-size:9px}
+  .progressWrap{height:58px;padding:7px 18px}
+  .gate{padding:12px 10px 20px}
+  .canvas,.canvas.narrow,.resultWrap{padding:22px 16px}
+  .title{font-size:clamp(32px,9vw,40px)}
+  .sub{font-size:15px}
+  .validationIntro{font-size:12px}
+  .internalGrid{grid-template-columns:1fr}
+  .stepper{grid-template-columns:48px 1fr 48px}.stepper input{font-size:24px}
+  .calcCard{padding:20px 16px}.calcBig{font-size:48px}
+  .resultHead .title{font-size:clamp(30px,9vw,38px)}
+  .heroMetric{font-size:clamp(38px,11vw,48px)}
+  .heroCaption{font-size:10px}
+  .resultSentence{font-size:14px}
+  .metrics{grid-template-columns:1fr 1fr;margin-top:20px}
+  .metric b{font-size:28px}
+  .graphTabs{margin-top:22px}
+  .graphTabs button{font-size:9px;padding:10px 4px}
+  .graphPanel{padding:14px 10px}
+  .chart svg{width:540px;min-width:540px;max-width:none}
+  .chart>div[style*="grid-template-columns:repeat(3"]{width:100%;min-width:0}
+  .chart>div[style*="grid-template-columns:repeat(3"]>*{min-width:0}
+  .footer{padding-left:10px;padding-right:10px}
+  .footLeft,.footRight{gap:6px}.btn{padding:0 14px}
+  .finalTools.show{grid-template-columns:1fr}
+  .finalTools .btn.green,.finalTools .btn{grid-column:1}
+}
+
 @media print{body{overflow:visible;background:#fff}.shell{display:block;height:auto}.top,.progressWrap,.footer,.finalTools{display:none!important}.stage{overflow:visible}.gate{display:none!important;position:static;padding:0}.gate[data-step="4"]{display:block!important}.resultWrap{width:100%;padding:0 20px}.graphTabs{display:none}.graphPanel{box-shadow:none}.scopeNote{font-size:9px}}
 
 .cloudStatus{display:inline-flex;align-items:center;gap:6px;margin-left:8px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.cloudDot{width:7px;height:7px;border-radius:50%;background:#B8C0CD}.cloudStatus.ok .cloudDot{background:#16A34A}.cloudStatus.warn .cloudDot{background:#F28C18}.cloudStatus.bad .cloudDot{background:#B42318}.cloudStatus.ok{color:#0E7A3C}.cloudStatus.warn{color:#B45309}.cloudStatus.bad{color:#B42318}
@@ -132,7 +212,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
         <div class="kicker">Compuerta 3 · Datos de tu obra</div>
         <h1 class="title">Validemos lo que realmente sabes.</h1>
         <p class="sub">Estos datos son valiosos para mejorar la comparación. Si el cliente conoce uno, lo ingresamos. Si no lo sabe o prefiere no entregarlo, mantenemos la referencia ACMA sin bloquear la simulación.</p>
-        <div class="validationIntro"><b>No es necesario completar todo.</b> Cada dato que el cliente confirme quedará marcado como “Dato cliente”; los demás permanecerán como “Referencia ACMA” y eso también quedará registrado en el historial.</div>
+        <div class="validationIntro"><b>Confirma los datos disponibles del proyecto.</b> Cada valor informado quedará marcado como “Dato cliente”; cuando un dato no esté disponible, se conserva la “Referencia ACMA” y queda registrado en el historial.</div>
         <div class="validationGrid" id="validationGrid"></div>
         <details class="internalDetails">
           <summary>Supuestos de modelación ACMA</summary>
@@ -292,7 +372,7 @@ function renderKamMeta(){
 
 const EXTRA={traspaso:100,modoCuantia:"m2"};
 const KEYS={history:"acma_tco_feria_history_v3",config:"acma_tco_feria_config_v3"};
-const APP_VERSION="TCO WEB V12 · email/PDF robusto + folio estable + decimales corregidos";
+const APP_VERSION="TCO WEB V13 · responsive iPhone/iPad + backend central";
 const defaultConfig={event:"Feria Edifica 2026",advisor:"Equipo ACMA",email:"",phone:"",closing:"Gracias por visitar ACMA.",kamIndex:0};
 const CLOUD=window.ACMA_TCO_CONFIG||{};
 let adminPin="";try{adminPin=sessionStorage.getItem("acma_tco_admin_pin")||""}catch(e){}
@@ -367,7 +447,7 @@ function bindAssumptions(){syncFloorIncidence(state);$("validationGrid").innerHT
 function renderValidationSources(){document.querySelectorAll("[data-vref]").forEach(b=>{const tag=b.parentElement.querySelector(".sourceTag");if(tag){tag.textContent=srcLabel(b.dataset.vref);tag.classList.toggle("client",(state._src&&state._src[b.dataset.vref])==="client")}})}
 function renderAssumptionValues(){}
 function renderProgress(){document.querySelectorAll("[data-p]").forEach(n=>{const p=+n.dataset.p;n.classList.toggle("done",step>p);n.classList.toggle("on",step===p)});document.querySelectorAll("[data-l]").forEach(l=>l.classList.toggle("done",step>+l.dataset.l));$("progressWrap").style.visibility=(step===0||step===5)?"hidden":"visible"}
-function showStep(n){step=Math.max(0,Math.min(5,n));document.querySelectorAll(".gate").forEach(g=>g.classList.toggle("active",+g.dataset.step===step));renderProgress();const labels=["Datos del visitante","Proyecto","Dimensión","Datos de obra","Resultado","Gracias"];$("stepText").textContent=labels[step];$("backBtn").style.visibility=(step===0||step===5)?"hidden":"visible";$("nextBtn").className="btn "+(step>=4?"orange":"primary");$("nextBtn").textContent=step===0?"Comenzar":step===1?"Continuar":step===2?"Continuar":step===3?"Ver resultado":step===4?"Finalizar":"Nueva simulación";if(step===4){renderResult();autoSaveAttempt()}var activeGate=document.querySelector(`.gate[data-step="${step}"]`);if(activeGate&&activeGate.scrollTo)activeGate.scrollTo(0,0)}
+function showStep(n){step=Math.max(0,Math.min(5,n));document.querySelectorAll(".gate").forEach(g=>g.classList.toggle("active",+g.dataset.step===step));renderProgress();const labels=["Datos del visitante","Proyecto","Dimensión","Datos de obra","Resultado","Gracias"];$("stepText").textContent=labels[step];$("backBtn").style.visibility=(step===0||step===5)?"hidden":"visible";$("nextBtn").className="btn "+(step>=4?"orange":"primary");$("nextBtn").textContent=step===0?"Comenzar":step===1?"Continuar":step===2?"Continuar":step===3?"Ver resultado":step===4?"Finalizar":"Nueva simulación";if(step===2){renderDimensions();renderDimensionSummary()}if(step===3){bindAssumptions()}if(step===4){renderResult();autoSaveAttempt()}var activeGate=document.querySelector(`.gate[data-step="${step}"]`);if(activeGate){if(activeGate.scrollTo)activeGate.scrollTo(0,0);window.scrollTo(0,0)}}
 function autoSaveAttempt(){if(!lead||savedId)return;const rec=saveCurrent();if(!rec)return;rec.sendStatus="Auto guardada · resultado";rec.autoSavedAt=nowIso();persist();$("savedBox").innerHTML=`<b>Evaluación ${esc(rec.publicId||rec.id)} registrada.</b> Guardando en el historial central de ACMA…`;$("savedBox").classList.add("show");syncRecord(rec);}
 function next(){if(step===0){if(!leadValid())return;captureLead();renderSession();showStep(1);return}if(step===5){newSimulation(true);return}showStep(step+1)}
 function renderSession(){if(lead){const identity=[lead.name,lead.company].filter(Boolean).join(" · ")||"Visitante anónimo";$("sessionName").textContent=identity;$("sessionMeta").textContent=lead.project||lead.email||"Simulación sin datos de contacto"}else{$("sessionName").textContent="Nueva simulación";$("sessionMeta").textContent="Paso a paso"}}
@@ -624,7 +704,7 @@ async function emailSummary(){
     await syncRecord(rec);
     var x=await cloudApi("send_email",{client_id:rec.id});
     rec.publicId=x.public_id||rec.publicId;rec.sendStatus="Correo enviado · CC "+k.m;rec.emailSentAt=nowIso();persist();renderHistory();toast("Correo enviado con PDF y copia al KAM.");
-  }catch(e){alert("No se pudo enviar el correo: "+(e.message||e))}
+  }catch(e){var msg=String(e&&e.message?e.message:e);if(msg.indexOf("RESEND_API_KEY")>=0)alert("El envío automático por correo está terminando de configurarse. Mientras tanto puedes usar Generar PDF o Compartir PDF.");else alert("No se pudo enviar el correo: "+msg)}
   finally{var b=$("emailSummaryBtn");if(b){b.disabled=false;b.textContent="Enviar TCO por correo + PDF"}}
 }
 async function shareSummary(){
@@ -698,7 +778,7 @@ $("saveSettingsBtn").onclick=()=>{config={event:$("cfgEvent").value.trim()||defa
 
 window.addEventListener("load",function(){if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})});
 window.addEventListener("keydown",e=>{if(e.key==="ArrowRight"&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName))next();if(e.key==="ArrowLeft"&&step>0&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName))showStep(step-1)});
-initKams();renderAll();showStep(0);if(cloudReady()){setCloudStatus(navigator.onLine?"ok":"warn",navigator.onLine?"Web":"Sin conexión");flushPending()}else setCloudStatus("warn","Sin backend");window.addEventListener("online",flushPending);
+window.addEventListener("pageshow",function(){try{renderAll();if(step===2)renderDimensionSummary();if(step===3)bindAssumptions();if(step===4)renderResult()}catch(e){}});initKams();renderAll();showStep(0);if(cloudReady()){setCloudStatus(navigator.onLine?"ok":"warn",navigator.onLine?"Web":"Sin conexión");flushPending()}else setCloudStatus("warn","Sin backend");window.addEventListener("online",flushPending);
 })();
 </script>
 </body>
