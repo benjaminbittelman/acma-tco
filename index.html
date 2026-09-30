@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#09266A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ACMA TCO">
+<link rel="manifest" href="manifest.webmanifest">
+<title>ACMA · TCO de enfierradura</title>
+<style>
+:root{
+  --navy:#09266A;--navy2:#1B44A8;--orange:#F28C18;--green:#0E7A3C;--red:#B42318;
+  --ink:#13203F;--slate:#64728C;--muted:#91A0B9;--wash:#F4F6FA;--rule:#DCE2EC;--white:#fff;
+  --shadow:0 22px 65px rgba(9,38,106,.12);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#F2F4F8;color:var(--ink);font-family:"Segoe UI",Inter,system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{overflow:hidden}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(242,140,24,.35);outline-offset:2px}
+.shell{height:100dvh;display:grid;grid-template-rows:auto auto 1fr auto;overflow:hidden;background:linear-gradient(180deg,#fff 0,#fff 78%,#F7F8FB 100%)}
+.top{height:72px;display:flex;align-items:center;padding:0 clamp(22px,4vw,52px);border-bottom:1px solid #EEF1F6;gap:18px;background:#fff;z-index:10}
+.logo{display:flex;align-items:center;gap:13px;min-width:0}.logoMark{font-weight:900;font-size:24px;letter-spacing:.13em;color:var(--navy)}
+.logoLine{width:1px;height:27px;background:var(--rule)}.logoText{min-width:0}.logoText b{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--navy)}.logoText span{display:block;margin-top:2px;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.session{margin-left:auto;text-align:right;min-width:0}.session b{display:block;font-size:12px;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px}.session span{font-size:10.5px;color:var(--muted)}
+.progressWrap{height:70px;display:flex;align-items:center;justify-content:center;padding:0 24px;background:#fff}
+.progress{width:min(660px,88vw);display:flex;align-items:center}.pnode{position:relative;display:flex;align-items:center;justify-content:center;width:27px;height:27px;transform:rotate(45deg);border:2px solid #D5DBE6;background:#fff;transition:.25s}.pnode span{transform:rotate(-45deg);font-size:10px;font-weight:800;color:#93A0B7}.pnode.on{background:var(--orange);border-color:var(--orange);box-shadow:0 0 0 6px rgba(242,140,24,.10)}.pnode.on span,.pnode.done span{color:#fff}.pnode.done{background:var(--navy);border-color:var(--navy)}.pline{height:2px;background:#DCE2EC;flex:1;transition:.25s}.pline.done{background:var(--navy)}
+.stage{position:relative;overflow:hidden;min-height:0;background-color:#09266A;background-image:linear-gradient(135deg,rgba(255,255,255,.035),rgba(0,0,0,.10)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cpath d='M0 0H72M0 36H72M0 72H72M0 0V72M36 0V72M72 0V72' stroke='%233B5AA1' stroke-width='1' opacity='.62'/%3E%3Crect x='32' y='32' width='8' height='8' rx='.5' transform='rotate(45 36 36)' fill='%23F28C18'/%3E%3C/svg%3E");background-size:auto,72px 72px}.stage:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.045),transparent 58%);z-index:0}.gate{position:absolute;inset:0;display:none;overflow:auto;padding:24px clamp(22px,5vw,70px) 30px;z-index:1}.gate.active{display:flex;align-items:center;justify-content:center;animation:gateIn .32s ease both}@keyframes gateIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.canvas{width:min(1100px,100%);margin:auto;background:rgba(255,255,255,.975);border:1px solid rgba(255,255,255,.32);box-shadow:0 28px 78px rgba(3,16,54,.30);padding:clamp(24px,3.3vw,42px);position:relative}.canvas:before{content:"";position:absolute;left:0;top:0;width:78px;height:5px;background:var(--orange)}.canvas.narrow{width:min(900px,100%)}
+.kicker{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}.title{font-size:clamp(34px,5.3vw,62px);line-height:.98;letter-spacing:-.045em;margin:0;color:var(--navy);font-weight:790;max-width:16ch}.title.center{max-width:none;text-align:center}.sub{font-size:clamp(14px,1.7vw,18px);line-height:1.55;color:var(--slate);max-width:62ch;margin:15px 0 0}.sub.center{margin:14px auto 0;text-align:center}
+.formCard{margin-top:28px;background:#fff;border:1px solid var(--rule);box-shadow:var(--shadow);padding:22px 24px}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:15px 18px}.field label{display:block;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin:0 0 7px}.field input,.field select,.field textarea{width:100%;border:1px solid #CFD7E5;background:#fff;color:var(--navy);padding:13px 12px;font-size:15px;min-height:48px}.field textarea{min-height:88px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--navy2)}.field small{display:block;margin-top:6px;font-size:10.5px;line-height:1.4;color:var(--muted)}
+.consent{display:flex;gap:10px;align-items:flex-start;margin-top:14px;color:var(--slate);font-size:11px;line-height:1.45}.consent input{margin-top:2px}.error{color:var(--red);font-size:11px;margin-top:10px;display:none}
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}.type{position:relative;text-align:left;border:1px solid var(--rule);background:linear-gradient(180deg,#fff,#FBFCFF);padding:19px 18px;min-height:137px;transition:.15s;color:var(--navy)}.type:hover{border-color:#AEBBD2;transform:translateY(-1px)}.type.on{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:inset 4px 0 0 var(--orange)}.type .diamond{position:absolute;right:16px;top:16px;width:10px;height:10px;transform:rotate(45deg);background:var(--orange);opacity:0}.type.on .diamond{opacity:1}.type b{display:block;font-size:18px;line-height:1.1;max-width:88%}.type span{display:block;font-size:11.5px;line-height:1.45;margin-top:8px;color:var(--slate)}.type.on span{color:#B9C8E5}.type em{display:block;font-style:normal;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:700;margin-top:13px;color:var(--navy2)}.type.on em{color:#fff}
+.dimensionLayout{display:grid;grid-template-columns:1fr .8fr;gap:42px;align-items:start;margin-top:28px}.inputs{display:grid;gap:15px}.numCard{background:linear-gradient(180deg,#fff,#FBFCFF);border:1px solid var(--rule);padding:15px 16px}.numTop{display:flex;align-items:baseline;justify-content:space-between;gap:12px}.numTop label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate)}.numTop .unit{font-size:10px;color:var(--muted)}.stepper{display:grid;grid-template-columns:54px 1fr 54px;align-items:stretch;margin-top:10px}.stepper button{border:0;background:var(--navy);color:#fff;font-size:24px}.stepper button:active{transform:scale(.97)}.stepper input{width:100%;border:1px solid var(--rule);border-left:0;border-right:0;text-align:center;color:var(--navy);font-size:27px;font-weight:800;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;padding:8px}.quick{display:flex;gap:6px;margin-top:8px}.quick button{flex:1;border:1px solid var(--rule);background:#fff;color:var(--slate);font-size:10px;font-weight:700;padding:6px}
+.calcCard{background:var(--navy);color:#fff;padding:24px;position:sticky;top:0}.calcCard .kicker{color:#F7AA50}.calcBig{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:clamp(38px,5vw,58px);font-weight:800;letter-spacing:-.05em;line-height:1}.calcUnit{font-size:.34em;margin-left:5px}.calcText{margin-top:13px;color:#B9C8E5;font-size:12.5px;line-height:1.55}.calcRows{margin-top:20px;border-top:1px solid rgba(255,255,255,.18)}.calcRow{display:flex;justify-content:space-between;gap:20px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:11px;color:#B9C8E5}.calcRow b{color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+.assumptions{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:28px}.assump{background:#fff;border:1px solid var(--rule);padding:18px}.assumpTop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.assumpTop b{font-size:14px;color:var(--navy)}.assumpTop span{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:21px;font-weight:800;color:var(--navy)}.assump p{font-size:11px;line-height:1.45;color:var(--slate);margin:6px 0 12px}.assump input[type=range]{width:100%;accent-color:var(--navy2)}.assump .rangeEnds{display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted);margin-top:3px}
+.validationIntro{margin-top:24px;border-left:4px solid var(--orange);background:#FFF8EE;padding:13px 15px;color:var(--slate);font-size:11.5px;line-height:1.5}.validationIntro b{color:var(--navy)}
+.validationGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.dataCard{border:1px solid var(--rule);background:#fff;padding:17px}.dataCardTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.dataCardTop b{font-size:13px;color:var(--navy)}.dataCardTop small{display:block;margin-top:4px;color:var(--slate);font-size:10px;line-height:1.4}.dataInput{display:flex;align-items:stretch;margin-top:12px}.dataInput input{width:100%;border:1px solid var(--rule);padding:10px 11px;color:var(--navy);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:18px;font-weight:800;min-height:44px}.dataInput .du{display:flex;align-items:center;border:1px solid var(--rule);border-left:0;background:var(--wash);padding:0 10px;color:var(--slate);font-size:10px;white-space:nowrap}.sourceLine{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;min-height:25px}.sourceTag{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--navy2)}.sourceTag:before{content:"";width:7px;height:7px;border-radius:50%;background:#AEB9CC}.sourceTag.client{color:var(--green)}.sourceTag.client:before{background:var(--green)}.useRef{border:0;background:transparent;color:var(--slate);font-size:9.5px;font-weight:700;padding:3px 0;text-decoration:underline;text-underline-offset:2px}.modeToggle{display:flex;border:1px solid var(--rule);background:#fff;margin:22px 0 10px}.modeToggle button{flex:1;border:0;background:#fff;color:var(--slate);font-size:10.5px;font-weight:800;padding:10px 12px}.modeToggle button.on{background:var(--navy);color:#fff}.derivedNote{font-size:10px;color:var(--slate);line-height:1.45;margin-top:7px}.thanksMark{width:72px;height:72px;margin:0 auto 22px;transform:rotate(45deg);background:var(--orange);box-shadow:0 0 0 12px rgba(242,140,24,.10)}.thanksActions{display:flex;justify-content:center;gap:8px;margin-top:28px}.thanksMeta{text-align:center;color:var(--slate);font-size:11px;line-height:1.55;margin:16px auto 0;max-width:54ch}.validatedStat{display:inline-flex;align-items:center;gap:6px;margin-top:9px;font-size:10px;font-weight:800;color:var(--green)}.validatedStat:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}
+
+.internalDetails{margin-top:14px;border:1px solid var(--rule);background:#fff}.internalDetails summary{list-style:none;padding:13px 16px;color:var(--slate);font-size:11px;font-weight:800;cursor:pointer}.internalDetails summary::-webkit-details-marker{display:none}.internalDetails summary:after{content:"＋";float:right;color:var(--navy)}.internalDetails[open] summary:after{content:"−"}.internalGrid{border-top:1px solid var(--rule);padding:14px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.internalGrid .field input{min-height:40px;padding:9px;font-size:12px}.internalGrid .field label{font-size:8.5px}.internalNote{grid-column:1/-1;font-size:10px;color:var(--muted);line-height:1.45;border-left:3px solid var(--orange);padding:7px 10px;background:#FFF9F1}
+.resultWrap{width:min(1100px,100%);margin:auto;background:rgba(255,255,255,.985);border:1px solid rgba(255,255,255,.32);box-shadow:0 28px 78px rgba(3,16,54,.30);padding:clamp(22px,3vw,36px);position:relative}.resultWrap:before{content:"";position:absolute;left:0;top:0;width:92px;height:5px;background:var(--orange)}.resultHead{text-align:center}.resultHead .title{max-width:none}.heroMetric{margin-top:20px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green);font-size:clamp(68px,10vw,126px);font-weight:850;letter-spacing:-.07em;line-height:.85}.heroMetric.neg{color:var(--red)}.heroCaption{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.11em;color:var(--slate);margin-top:12px}.resultSentence{font-size:clamp(14px,1.5vw,17px);line-height:1.5;color:var(--ink);max-width:820px;margin:16px auto 0;text-align:center}.metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:25px auto 0;border-top:2px solid var(--navy);max-width:900px}.metric{padding:17px 18px 6px;text-align:center;border-left:1px solid var(--rule)}.metric:first-child{border-left:0}.metric b{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:clamp(25px,3vw,36px);color:var(--navy)}.metric span{display:block;margin-top:6px;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+.graphTabs{display:flex;justify-content:center;gap:4px;margin-top:26px}.graphTabs button{border:1px solid var(--rule);background:#fff;color:var(--slate);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:9px 14px}.graphTabs button.on{background:var(--navy);border-color:var(--navy);color:#fff}.graphPanel{margin:10px auto 0;width:min(900px,100%);background:#fff;border:1px solid var(--rule);padding:14px 16px}.graphTitle{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:8px}.graphTitle b{font-size:13px;color:var(--navy)}.graphTitle p{margin:0;font-size:10.5px;line-height:1.45;color:var(--slate);max-width:58ch}.chart{width:100%;min-height:260px}.chart svg{display:block;width:100%;height:auto;max-height:330px}.scopeNote{margin:10px auto 0;width:min(900px,100%);font-size:10.5px;line-height:1.5;color:var(--muted);text-align:center}
+.footer{height:84px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,4vw,52px);border-top:1px solid var(--rule);background:#fff;z-index:20}.footLeft,.footRight{display:flex;align-items:center;gap:9px}.btn{border:1px solid var(--navy);background:#fff;color:var(--navy);font-weight:800;min-height:48px;padding:0 22px;letter-spacing:.02em}.btn.primary{background:var(--navy);color:#fff}.btn.orange{background:var(--orange);border-color:var(--orange);color:#fff}.btn.green{background:var(--green);border-color:var(--green);color:#fff}.btn.ghost{border-color:var(--rule);color:var(--slate)}.btn.small{min-height:40px;padding:0 14px;font-size:11px}.btn[disabled]{opacity:.35;cursor:default}.stepText{font-size:10px;color:var(--muted)}
+.finalTools{display:none;justify-content:center;gap:8px;margin-top:14px}.finalTools.show{display:flex}.finalTools .btn{min-height:38px;font-size:10px;padding:0 12px}
+.modal{position:fixed;inset:0;background:rgba(7,21,55,.62);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}.modal.on{display:flex}.modalCard{width:min(980px,100%);max-height:92vh;overflow:auto;background:#fff;box-shadow:0 30px 100px rgba(0,0,0,.28)}.modalCard.small{width:min(650px,100%)}.modalHead{position:sticky;top:0;background:#fff;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:16px 19px;border-bottom:1px solid var(--rule)}.modalHead h3{font-size:17px;margin:0;color:var(--navy)}.modalBody{padding:18px}.modalFoot{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--rule);padding:12px 18px;display:flex;justify-content:flex-end;gap:8px}
+.adminTabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);margin-bottom:14px}.adminTabs button{border:0;background:#fff;padding:9px 12px;font-size:10px;font-weight:800;color:var(--slate);border-bottom:3px solid transparent}.adminTabs button.on{color:var(--navy);border-bottom-color:var(--orange)}.adminPane{display:none}.adminPane.on{display:block}.historyTools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.historyTools input{flex:1;min-width:220px;border:1px solid var(--rule);padding:10px}.histList{display:grid;gap:8px}.histItem{border:1px solid var(--rule);padding:12px;display:grid;grid-template-columns:1.3fr .75fr auto;gap:12px;align-items:center}.histItem b{font-size:12px;color:var(--navy)}.histItem .sub{font-size:10px;color:var(--slate);line-height:1.45;margin-top:3px}.histItem .money{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:16px;font-weight:800;color:var(--green)}.histItem .acts{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.histItem .acts button{border:1px solid var(--rule);background:#fff;color:var(--slate);padding:6px 8px;font-size:9px;font-weight:800}.empty{text-align:center;padding:35px;color:var(--muted);font-size:11px}.configGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.toast{position:fixed;right:20px;bottom:102px;background:var(--ink);color:#fff;padding:11px 14px;font-size:11px;box-shadow:var(--shadow);z-index:200;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}.toast.on{opacity:1;transform:none}.successBox{background:#EFF9F3;border-left:4px solid var(--green);padding:14px 15px;font-size:11.5px;line-height:1.5;color:#355B43;margin-top:14px;display:none}.successBox.show{display:block}
+@media(max-width:850px){.types{grid-template-columns:repeat(2,1fr)}.validationGrid{grid-template-columns:1fr}.dimensionLayout{grid-template-columns:1fr}.calcCard{position:static}.internalGrid{grid-template-columns:repeat(2,1fr)}.assumptions{grid-template-columns:1fr}.histItem{grid-template-columns:1fr auto}.histItem .acts{grid-column:1/-1;justify-content:flex-start}.resultWrap{padding-top:20px}.gate.active{align-items:flex-start}}
+@media(max-width:590px){.graphTabs{flex-wrap:wrap}.graphTabs button{flex:1 1 30%}.canvas,.resultWrap{padding:20px 16px}.stage{background-size:auto,58px 58px}body{overflow:auto}.shell{min-height:100dvh;height:auto;grid-template-rows:auto auto minmax(660px,1fr) auto}.top{height:62px;padding:0 14px}.logoText{display:none}.session b{max-width:180px}.progressWrap{height:58px}.gate{padding:16px 14px 20px}.types,.formGrid,.configGrid{grid-template-columns:1fr}.type{min-height:105px}.title{font-size:38px}.dimensionLayout{gap:18px}.internalGrid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.metric:nth-child(3){grid-column:1/-1;border-left:0;border-top:1px solid var(--rule)}.footer{height:auto;min-height:74px;padding:10px 14px;position:sticky;bottom:0}.btn{padding:0 14px}.stepText{display:none}.heroMetric{font-size:66px}.graphTitle{display:block}.graphTitle p{margin-top:5px}.finalTools{flex-wrap:wrap}}
+@media print{body{overflow:visible;background:#fff}.shell{display:block;height:auto}.top,.progressWrap,.footer,.finalTools{display:none!important}.stage{overflow:visible}.gate{display:none!important;position:static;padding:0}.gate[data-step="4"]{display:block!important}.resultWrap{width:100%;padding:0 20px}.graphTabs{display:none}.graphPanel{box-shadow:none}.scopeNote{font-size:9px}}
+
+.cloudStatus{display:inline-flex;align-items:center;gap:6px;margin-left:8px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.cloudDot{width:7px;height:7px;border-radius:50%;background:#B8C0CD}.cloudStatus.ok .cloudDot{background:#16A34A}.cloudStatus.warn .cloudDot{background:#F28C18}.cloudStatus.bad .cloudDot{background:#B42318}.cloudStatus.ok{color:#0E7A3C}.cloudStatus.warn{color:#B45309}.cloudStatus.bad{color:#B42318}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <div class="logo"><div class="logoMark">ACMA</div><div class="logoLine"></div><div class="logoText"><b>TCO · Enfierradura</b><span id="eventLabel">Evaluación preliminar</span></div></div>
+    <div class="session"><b id="sessionName">Nueva simulación</b><span id="sessionMeta">Paso a paso</span></div>
+  </header>
+
+  <div class="progressWrap" id="progressWrap">
+    <div class="progress" aria-label="Progreso de la evaluación">
+      <div class="pnode" data-p="1"><span>1</span></div><div class="pline" data-l="1"></div>
+      <div class="pnode" data-p="2"><span>2</span></div><div class="pline" data-l="2"></div>
+      <div class="pnode" data-p="3"><span>3</span></div><div class="pline" data-l="3"></div>
+      <div class="pnode" data-p="4"><span>4</span></div>
+    </div>
+  </div>
+
+  <main class="stage">
+    <section class="gate active" data-step="0">
+      <div class="canvas narrow">
+        <div class="kicker">Antes de comenzar</div>
+        <h1 class="title">Calculemos el TCO de tu proyecto.</h1>
+        <p class="sub">Comparemos el TCO de la enfierradura tradicional versus una solución industrializada con malla electrosoldada, usando los datos de tu proyecto.</p>
+        <div class="formCard">
+          <div class="formGrid">
+            <div class="field"><label>Nombre y apellido</label><input id="leadFullName" autocomplete="name" placeholder="Nombre"></div>
+            <div class="field"><label>Empresa</label><input id="leadCompany" autocomplete="organization" placeholder="Empresa"></div>
+            <div class="field"><label>Email</label><input id="leadEmail" type="email" autocomplete="email" placeholder="nombre@empresa.cl"></div>
+            <div class="field"><label>Teléfono</label><input id="leadPhone" type="tel" autocomplete="tel" placeholder="+56 9 ..."></div>
+            <div class="field"><label>Proyecto / obra</label><input id="leadProject" placeholder="Nombre del proyecto"></div>
+            <div class="field"><label>Cargo</label><input id="leadRole" autocomplete="organization-title" placeholder="Cargo"></div>
+            <div class="field" style="grid-column:1/-1"><label>KAM ACMA que realiza la evaluación</label><select id="leadKam"></select><small id="kamMeta"></small></div>
+          </div>
+          <div class="error" id="leadError"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="gate" data-step="1">
+      <div class="canvas">
+        <div class="kicker">Compuerta 1 · Proyecto</div>
+        <h1 class="title">¿Qué tipo de obra estás evaluando?</h1>
+        <p class="sub">Elige el caso que más se parezca. Luego podrás cambiar sus dimensiones y supuestos.</p>
+        <div class="types" id="typologies"></div>
+      </div>
+    </section>
+
+    <section class="gate" data-step="2">
+      <div class="canvas">
+        <div class="kicker">Compuerta 2 · Dimensión</div>
+        <h1 class="title">Ajustemos el tamaño de la obra.</h1>
+        <p class="sub">Si conoces la cuantía de tu proyecto, ingrésala. Si no, puedes mantener la referencia ACMA del caso elegido.</p>
+        <div class="modeToggle" id="quantMode"><button data-qmode="m2" class="on">Cuantía por m² construido</button><button data-qmode="m3">Cuantía por m³ de hormigón</button></div>
+        <div class="dimensionLayout">
+          <div class="inputs" id="dimensionInputs"></div>
+          <aside class="calcCard">
+            <div class="kicker">Volumen estimado</div>
+            <div class="calcBig" id="steelTon">—<span class="calcUnit">t</span></div>
+            <div class="calcText" id="steelDesc">—</div>
+            <div class="calcRows">
+              <div class="calcRow"><span>Superficie</span><b id="sumM2">—</b></div>
+              <div class="calcRow"><span>Cuantía superficial</span><b id="sumKgM2">—</b></div>
+              <div class="calcRow"><span>Hormigón estimado</span><b id="sumConcreteM3">—</b></div>
+              <div class="calcRow"><span>Cuantía volumétrica</span><b id="sumKgM3">—</b></div>
+              <div class="calcRow" id="rowFloors"><span>Pisos considerados</span><b id="sumFloors">—</b></div>
+              <div class="calcRow" id="rowIncidence"><span>Incidencia ruta crítica</span><b id="sumIncidence">—</b></div>
+              <div class="calcRow"><span>Potencial en malla</span><b id="sumMesh">—</b></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="gate" data-step="3">
+      <div class="canvas narrow">
+        <div class="kicker">Compuerta 3 · Datos de tu obra</div>
+        <h1 class="title">Validemos lo que realmente sabes.</h1>
+        <p class="sub">Estos datos son valiosos para mejorar la comparación. Si el cliente conoce uno, lo ingresamos. Si no lo sabe o prefiere no entregarlo, mantenemos la referencia ACMA sin bloquear la simulación.</p>
+        <div class="validationIntro"><b>No es necesario completar todo.</b> Cada dato que el cliente confirme quedará marcado como “Dato cliente”; los demás permanecerán como “Referencia ACMA” y eso también quedará registrado en el historial.</div>
+        <div class="validationGrid" id="validationGrid"></div>
+        <details class="internalDetails">
+          <summary>Supuestos de modelación ACMA</summary>
+          <div class="internalGrid">
+            <div class="field"><label>Acero sustituible por malla (%)</label><input type="number" id="pctSust" min="0" max="95"></div>
+            <div class="field"><label>Ganancia productividad malla (%)</label><input type="number" id="efMalla" min="0" max="80"></div>
+            <div class="field"><label>Incidencia ruta crítica (%)</label><input type="number" id="incRc" min="0" max="100"><small id="incRcHelp" style="display:block;margin-top:5px;color:#71809A;font-size:10px;line-height:1.35"></small></div>
+            <div class="field"><label>Precio malla ($/kg)</label><input type="text" inputmode="numeric" class="moneyInput" id="cMallaFija"></div>
+            <div class="field"><label>Instalación barra ($/kg)</label><input type="text" inputmode="numeric" class="moneyInput" id="cMoTrad"></div>
+            <div class="field"><label>Homologación (%)</label><input type="number" id="fHom"></div>
+            <div class="field"><label>Pérdida barra (%)</label><input type="number" id="lossTrad"></div>
+            <div class="field"><label>Pérdida malla (%) · fija</label><input type="number" id="lossMalla" value="1" readonly><small style="display:block;margin-top:5px;color:#71809A;font-size:10px">Fijada en 1% para todas las simulaciones.</small></div>
+            <div class="field"><label>Dotación después</label><input type="number" id="dotInd"></div>
+            <div class="field"><label>Traspaso eficiencia a $/kg (%)</label><input type="number" id="traspaso"></div>
+            <div class="internalNote">Los parámetros de esta sección son supuestos internos de modelación. Los cuatro datos de arriba son los que queremos aprender directamente de los clientes cuando estén disponibles.</div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="gate" data-step="4">
+      <div class="resultWrap">
+        <div class="resultHead">
+          <div class="kicker">Resultado TCO preliminar</div>
+          <h1 class="title center" id="resultTitle">Tu simulación</h1>
+          <div class="heroMetric" id="heroSaving">—</div>
+          <div class="heroCaption" id="heroCaption">Ahorro TCO estimado</div>
+          <p class="resultSentence" id="resultSentence">—</p>
+        </div>
+        <div class="metrics">
+          <div class="metric"><b id="mPct">—</b><span>Diferencia sobre TCO considerado</span></div>
+          <div class="metric"><b id="mDays">—</b><span>Días liberados en la partida</span></div>
+          <div class="metric"><b id="mJh">—</b><span>Jornadas-hombre liberadas</span></div>
+        </div>
+        <div class="graphTabs"><button class="on" data-chart="bridge">Costo</button><button data-chart="time">Plazo</button><button data-chart="mix">Composición</button><button data-chart="sensitivity">Sensibilidad</button><button data-chart="breakeven">Punto de equilibrio</button></div>
+        <div class="graphPanel">
+          <div class="graphTitle"><b id="graphTitle">Cómo se construye la diferencia</b><p id="graphDesc">Puente entre el costo considerado actual y el escenario con malla.</p></div>
+          <div class="chart" id="chart"></div>
+        </div>
+        <div class="scopeNote">Simulación preliminar. Los datos no confirmados por el cliente se mantienen como referencias ACMA y quedan identificados como tales. Considera material, instalación, pérdidas y gasto general asociado al plazo de la partida; requiere validación de ingeniería y precios vigentes.</div>
+        <div class="successBox" id="savedBox"></div>
+        <div class="finalTools" id="finalTools"></div>
+      </div>
+    </section>
+
+    <section class="gate" data-step="5">
+      <div class="canvas narrow" style="text-align:center">
+        <div class="thanksMark"></div>
+        <div class="kicker">Evaluación finalizada</div>
+        <h1 class="title center">Gracias por tu tiempo.</h1>
+        <p class="sub center">Esperamos que esta simulación te haya ayudado a visualizar el impacto potencial de industrializar la enfierradura con malla electrosoldada.</p>
+        <p class="thanksMeta">La evaluación quedó registrada para análisis y seguimiento posterior de ACMA.</p>
+        <div class="thanksActions"><button class="btn primary" id="thanksNewBtn">Nueva simulación</button><button class="btn ghost small" id="thanksAdminBtn">Gestión ACMA</button></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footLeft"><button class="btn ghost" id="backBtn">Atrás</button><span class="stepText" id="stepText">Datos del visitante</span></div>
+    <div class="footRight"><button class="btn primary" id="nextBtn">Comenzar</button></div>
+  </footer>
+</div>
+
+<div class="modal" id="adminModal">
+  <div class="modalCard">
+    <div class="modalHead"><h3>Gestión ACMA · historial central</h3><button class="btn ghost small" data-close="adminModal">Cerrar</button></div>
+    <div class="modalBody">
+      <div class="adminTabs"><button class="on" data-admin="history">Historial</button><button data-admin="config">Configuración</button></div>
+      <div class="adminPane on" id="adminHistory">
+        <div class="historyTools"><input id="historySearch" placeholder="Buscar cliente, empresa o proyecto"><button class="btn small" id="exportCsvBtn">Exportar CSV</button><button class="btn ghost small" id="exportJsonBtn">Backup JSON</button><label class="btn ghost small" style="display:inline-flex;align-items:center;cursor:pointer">Importar JSON<input type="file" id="importJson" accept=".json,application/json" hidden></label></div>
+        <div class="histList" id="historyList"></div>
+      </div>
+      <div class="adminPane" id="adminConfig">
+        <div class="configGrid">
+          <div class="field"><label>Evento</label><input id="cfgEvent"></div>
+          <div class="field"><label>Ejecutivo ACMA</label><input id="cfgAdvisor"></div>
+          <div class="field"><label>Email ejecutivo</label><input id="cfgEmail" type="email"></div>
+          <div class="field"><label>Teléfono ejecutivo</label><input id="cfgPhone"></div>
+          <div class="field" style="grid-column:1/-1"><label>Mensaje de cierre</label><textarea id="cfgClosing"></textarea></div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-top:14px"><button class="btn primary small" id="saveSettingsBtn">Guardar configuración</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="followModal">
+  <div class="modalCard small">
+    <div class="modalHead"><h3>Seguimiento comercial</h3><button class="btn ghost small" data-close="followModal">Cerrar</button></div>
+    <div class="modalBody">
+      <input type="hidden" id="followId">
+      <div class="configGrid">
+        <div class="field"><label>Nivel de interés</label><select id="followInterest"><option>Sin clasificar</option><option>Alto</option><option>Medio</option><option>Exploratorio</option></select></div>
+        <div class="field"><label>Próximo paso</label><select id="followNext"><option>Por definir</option><option>Agendar reunión</option><option>Solicitar planos / cubicación</option><option>Enviar ficha técnica</option><option>Preparar cotización</option><option>Llamar después de la feria</option><option>Sin acción definida</option></select></div>
+        <div class="field" style="grid-column:1/-1"><label>Notas</label><textarea id="followNotes" placeholder="Ej.: proyecto inicia en noviembre; hablar con oficina técnica; interesado en losas..."></textarea></div>
+      </div>
+    </div>
+    <div class="modalFoot"><button class="btn primary" id="saveFollowBtn">Guardar seguimiento</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="config.js"></script>
+<script>
+(()=>{"use strict";
+const $=id=>document.getElementById(id);
+const CLP=n=>"$"+new Intl.NumberFormat("es-CL",{maximumFractionDigits:0}).format(Math.round(n||0));
+const NUM=(n,d=0)=>new Intl.NumberFormat("es-CL",{minimumFractionDigits:d,maximumFractionDigits:d}).format(Number(n)||0);
+const MM=n=>{const a=Math.abs(n||0)/1e6,d=a&&a<1?3:a<10?2:1;return(n<0?"−":"")+"$"+new Intl.NumberFormat("es-CL",{minimumFractionDigits:d,maximumFractionDigits:d}).format(a)+" MM"};
+const MONEY_KEYS=new Set(["ggDia","cAcero","cMallaFija","cMoTrad"]);
+const MONEY_TEXT=n=>new Intl.NumberFormat("es-CL",{maximumFractionDigits:0}).format(Math.round(Number(n)||0));
+const PARSE_MONEY=v=>Math.max(0,Number(String(v==null?"":v).replace(/[^0-9-]/g,""))||0);
+const BUILDING_CASES=new Set(["bloques","altura10","altura15"]);
+const isBuildingCase=k=>BUILDING_CASES.has(k);
+function incidenceFromFloors(f){f=Math.max(1,Number(f)||1);let v;if(f<=5){v=50+(f-2)*(20/3)}else if(f<=10){v=70+(f-5)*3}else{v=85+(f-10)*1}return Math.max(0,Math.min(100,v))}
+function syncFloorIncidence(s=state){if(!s._analysisNoFloorSync&&isBuildingCase(s.case)){s.floors=Math.max(1,Math.round(Number(s.floors)||CASES[s.case].floors||1));s.incRc=incidenceFromFloors(s.floors)}s.lossMalla=1;return s}
+
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const nowIso=()=>new Date().toISOString();
+const fmtDate=x=>new Intl.DateTimeFormat("es-CL",{dateStyle:"short",timeStyle:"short"}).format(new Date(x));
+const toast=t=>{const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),2200)};
+const download=(name,content,type="text/plain;charset=utf-8")=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)};
+
+const CASES={
+  viviendas:{s:"Viviendas",n:"Conjunto de viviendas",d:"1–2 pisos · radieres y losas · paño repetitivo",unit:"casa",unitP:"casas",units:50,m2Unit:100,m2:5000,floors:2,kgM2:15,kgSrc:"Datos ACMA",consHorm:0.25,kgM3:60,pctSust:65,pctSrc:"Datos ACMA",fHom:100,cAcero:845,cMallaFija:1050,cMoTrad:480,lossTrad:8,lossMalla:1,dotTrad:6,dotInd:6,indivTrad:180,efMalla:23,ggDia:1000000,incRc:50},
+  bloques:{s:"Bloques",n:"Edificio en bloques",d:"5 pisos · plantas repetidas · baja logística vertical",unit:"edificio",unitP:"edificios",units:4,m2Unit:2500,m2:10000,floors:5,kgM2:27,kgSrc:"Datos ACMA",consHorm:0.35,kgM3:77,pctSust:61,pctSrc:"Datos ACMA",fHom:100,cAcero:845,cMallaFija:1050,cMoTrad:460,lossTrad:7,lossMalla:1,dotTrad:8,dotInd:8,indivTrad:190,efMalla:23,ggDia:1200000,incRc:70},
+  altura10:{s:"10 pisos",n:"Edificio en altura · 10 pisos",d:"Ciclo de losa · grúa · logística vertical",unit:"torre",unitP:"torres",units:2,m2Unit:5000,m2:10000,floors:10,kgM2:35,kgSrc:"Referencia",consHorm:0.38,kgM3:92,pctSust:48,pctSrc:"Datos ACMA",fHom:100,cAcero:845,cMallaFija:1050,cMoTrad:450,lossTrad:7,lossMalla:1,dotTrad:9,dotInd:9,indivTrad:200,efMalla:23,ggDia:1800000,incRc:85},
+  altura15:{s:"15 pisos",n:"Edificio en altura · 15 pisos",d:"Mayor cuantía · menor sustitución en elementos sismorresistentes",unit:"torre",unitP:"torres",units:2,m2Unit:8000,m2:16000,floors:15,kgM2:40,kgSrc:"Referencia",consHorm:0.42,kgM3:95,pctSust:40,pctSrc:"Datos ACMA",fHom:100,cAcero:845,cMallaFija:1050,cMoTrad:440,lossTrad:7,lossMalla:1,dotTrad:10,dotInd:10,indivTrad:200,efMalla:23,ggDia:2400000,incRc:90},
+  nave:{s:"Nave",n:"Nave industrial",d:"1 piso · fundaciones, pilares y radier · acceso libre",unit:null,unitP:null,units:1,m2Unit:0,m2:10000,floors:1,kgM2:30,kgSrc:"Referencia",consHorm:0.30,kgM3:100,pctSust:65,pctSrc:"Referencia",fHom:100,cAcero:845,cMallaFija:1050,cMoTrad:430,lossTrad:6,lossMalla:1,dotTrad:12,dotInd:12,indivTrad:220,efMalla:23,ggDia:1800000,incRc:85},
+  pavimento:{s:"Pavimento",n:"Pavimento y radier industrial",d:"Losa sobre terreno · alta sustitución potencial",unit:null,unitP:null,units:1,m2Unit:0,m2:10000,floors:1,kgM2:12,kgSrc:"Referencia",consHorm:0.20,kgM3:60,pctSust:80,pctSrc:"Referencia",fHom:100,cAcero:845,cMallaFija:860,cMoTrad:420,lossTrad:6,lossMalla:1,dotTrad:10,dotInd:10,indivTrad:250,efMalla:23,ggDia:1200000,incRc:90}
+};
+
+const KAMS=[
+  {n:"Benjamín Bittelman",c:"Key Account Manager",m:"bbittelman@acma.cl",t:"+56 9 8360 8787"},
+  {n:"Christopher Méndez",c:"KAM Constructora",m:"cmendez@acma.cl",t:"+56 9 6832 7122"},
+  {n:"Gabriel Espinoza Hidalgo",c:"Business Development Manager",m:"gespinoza@acma.cl",t:"+56 9 7568 0514"},
+  {n:"Isabel Agüero",c:"KAM Constructoras",m:"iaguero@acma.cl",t:"+56 9 9685 0378"},
+  {n:"Fernando Durán P.",c:"Gerente de Venta Directa",m:"fduran@acma.cl",t:"+56 9 9827 4179"}
+];
+function selectedKam(){
+  var sel=$("leadKam"),idx=sel?parseInt(sel.value||"0",10):0;
+  return KAMS[idx]||KAMS[0];
+}
+function initKams(){
+  var sel=$("leadKam"); if(!sel)return;
+  var old=sel.value;
+  sel.innerHTML=KAMS.map(function(k,i){return '<option value="'+i+'">'+esc(k.n)+' · '+esc(k.c)+'</option>'}).join("");
+  if(old!==""&&KAMS[+old])sel.value=old;
+  else sel.value=String(config.kamIndex||0);
+  renderKamMeta();
+}
+function renderKamMeta(){
+  var k=selectedKam(),m=$("kamMeta");
+  if(m)m.textContent=k.m+" · "+k.t;
+  if($("leadKam")) config.kamIndex=parseInt($("leadKam").value||"0",10)||0;
+  persistConfig();
+}
+
+const EXTRA={traspaso:100,modoCuantia:"m2"};
+const KEYS={history:"acma_tco_feria_history_v3",config:"acma_tco_feria_config_v3"};
+const APP_VERSION="TCO WEB V12 · email/PDF robusto + folio estable + decimales corregidos";
+const defaultConfig={event:"Feria Edifica 2026",advisor:"Equipo ACMA",email:"",phone:"",closing:"Gracias por visitar ACMA.",kamIndex:0};
+const CLOUD=window.ACMA_TCO_CONFIG||{};
+let adminPin="";try{adminPin=sessionStorage.getItem("acma_tco_admin_pin")||""}catch(e){}
+function cloudReady(){return !!(CLOUD.functionUrl&&String(CLOUD.functionUrl).indexOf("REEMPLAZAR")<0)}
+function setCloudStatus(kind,text){const e=$("cloudStatus");if(!e)return;e.className="cloudStatus "+(kind||"");const s=e.querySelector("span");if(s)s.textContent=text||""}
+async function cloudApi(action,payload,pin){
+  if(!cloudReady())throw new Error("Backend central no configurado");
+  const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),15000);
+  try{
+    const res=await fetch(CLOUD.functionUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:action,payload:payload||{},pin:pin||""}),signal:ctrl.signal});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok||data.ok===false)throw new Error(data.error||("Error "+res.status));
+    return data;
+  }finally{clearTimeout(timer)}
+}
+function localById(id){return history.find(function(r){return r.id===id})}
+async function syncRecord(rec){
+  if(!rec)return null;
+  if(!cloudReady()){setCloudStatus("warn","Modo local");return rec}
+  try{
+    setCloudStatus("warn","Guardando…");
+    const x=await cloudApi("create",{evaluation:rec});
+    rec.remoteId=x.id;rec.publicId=x.public_id;rec.sendStatus="Guardada en historial central";rec.syncedAt=nowIso();persist();
+    setCloudStatus("ok","Centralizado");
+    if($("savedBox")&&step===4){$("savedBox").innerHTML=`<b>Evaluación ${esc(rec.publicId||rec.id)} registrada.</b> Guardada en el historial central de ACMA.`;$("savedBox").classList.add("show")}
+    return rec;
+  }catch(e){rec.sendStatus="Pendiente de sincronizar";persist();setCloudStatus("bad","Pendiente");if($("savedBox")&&step===4){$("savedBox").innerHTML=`<b>Evaluación guardada localmente.</b> Se sincronizará cuando vuelva la conexión.`;$("savedBox").classList.add("show")}return rec}
+}
+async function flushPending(){if(!cloudReady()||!navigator.onLine)return;const pending=history.filter(function(r){return !r.remoteId||r.sendStatus==="Pendiente de sincronizar"});for(const r of pending){await syncRecord(r)}}
+async function requireAdminPin(){if(adminPin)return adminPin;const p=window.prompt("PIN de Gestión ACMA");if(!p)throw new Error("PIN requerido");adminPin=p;try{sessionStorage.setItem("acma_tco_admin_pin",p)}catch(e){}return p}
+async function loadCentralHistory(){
+  if(!cloudReady()){renderHistory();return}
+  try{
+    const pin=await requireAdminPin();setCloudStatus("warn","Cargando…");const x=await cloudApi("list",{},pin);
+    const remote=(x.items||[]).map(function(row){const r=row.payload||{};r.remoteId=row.id;r.publicId=row.public_id;r.sendStatus=row.send_status||r.sendStatus;r.follow=row.follow||r.follow||{};return r});
+    const unsynced=history.filter(function(l){return !remote.some(function(r){return r.id===l.id})});history=remote.concat(unsynced).sort(function(a,b){return String(b.createdAt||"").localeCompare(String(a.createdAt||""))});persist();renderHistory();setCloudStatus("ok","Centralizado");
+  }catch(e){if(String(e.message||e).indexOf("PIN")>=0){adminPin="";try{sessionStorage.removeItem("acma_tco_admin_pin")}catch(x){}}setCloudStatus("bad","Sin acceso");renderHistory();if(e.message!=="PIN requerido")alert(e.message||e)}
+}
+
+const load=(k,f)=>{try{var x=JSON.parse(localStorage.getItem(k));return x==null?f:x}catch(e){return f}};
+let config=load(KEYS.config,defaultConfig),history=load(KEYS.history,[]),lead=null,state=makeCase("altura15"),step=0,activeChart="bridge",savedId=null;
+function makeCase(k){const base={case:k,...JSON.parse(JSON.stringify(CASES[k])),...EXTRA};base._src={kgM2:"reference",consHorm:"reference",kgM3:"reference",floors:"reference",dotTrad:"reference",indivTrad:"reference",ggDia:"reference",cAcero:"reference"};syncFloorIncidence(base);return base}
+function srcLabel(k){return (state._src&&state._src[k])==="client"?"Dato cliente":(state._src&&state._src[k])==="derived"?"Derivado":"Referencia ACMA"}
+function markClient(k){state._src=state._src||{};state._src[k]="client";savedId=null}
+function resetRef(k){const ref=(CASES[state.case]&&CASES[state.case][k]);if(ref===undefined)return;state[k]=ref;state._src=state._src||{};state._src[k]="reference";if(k==="dotTrad")state.dotInd=ref;syncFloorIncidence(state);savedId=null;renderAll()}
+function clientFields(s=state){return Object.entries(s._src||{}).filter(([,v])=>v==="client").map(([k])=>k)}
+function resolved(s=state){const r={...s};syncFloorIncidence(r);if(r.unit)r.m2=Math.round((+r.m2Unit||0)*(+r.units||0));if(r.modoCuantia==="m3")r.kgM2=(+r.consHorm||0)*(+r.kgM3||0);else r.kgM3=(+r.consHorm||0)>0?(+r.kgM2||0)/(+r.consHorm||0):0;r.m3=(+r.m2||0)*(+r.consHorm||0);r.concreteM3=r.m3;r.pTon=(r.m2||0)*(r.kgM2||0)/1000;r.indivMalla=(r.indivTrad||0)*(1+(r.efMalla||0)/100);r.gMalla=1-1/(1+(r.efMalla||0)/100);r.cMalla=r.cMallaFija;return r}
+function model(s=state){const i=resolved(s),kgP=i.pTon*1000,sh=(i.pctSust||0)/100,f=(i.fHom||0)/100,kgMalla=kgP*sh*f,kgBarraInd=kgP*(1-sh),kgInd=kgMalla+kgBarraInd,jhT=i.indivTrad>0?kgP/i.indivTrad:0,jhI=(i.indivMalla>0?kgMalla/i.indivMalla:0)+(i.indivTrad>0?kgBarraInd/i.indivTrad:0),daysT=i.dotTrad>0?jhT/i.dotTrad:0,daysI=i.dotInd>0?jhI/i.dotInd:0,cMoInd=Math.round(i.cMoTrad*(1-(i.gMalla||0)*(i.traspaso||0)/100)),matT=kgP*i.cAcero,matI=kgMalla*i.cMalla+kgBarraInd*i.cAcero,lossT=kgP*(i.lossTrad/100)*i.cAcero,lossI=kgMalla*(i.lossMalla/100)*i.cMalla+kgBarraInd*(i.lossTrad/100)*i.cAcero,instT=kgP*i.cMoTrad,instI=kgMalla*cMoInd+kgBarraInd*i.cMoTrad,ggT=daysT*i.ggDia*(i.incRc/100),ggI=daysI*i.ggDia*(i.incRc/100),totT=matT+instT+lossT+ggT,totI=matI+instI+lossI+ggI,saving=totT-totI,dDays=daysT-daysI,dJh=jhT-jhI;return{i,kgP,kgMalla,kgBarraInd,kgInd,jhT,jhI,daysT,daysI,cMoInd,matT,matI,lossT,lossI,instT,instI,ggT,ggI,totT,totI,saving,dDays,dJh,pct:totT?saving/totT*100:0}}
+function persist(){try{localStorage.setItem(KEYS.history,JSON.stringify(history))}catch(e){}}function persistConfig(){try{localStorage.setItem(KEYS.config,JSON.stringify(config))}catch(e){}}
+function openModal(id){$(id).classList.add("on")}function closeModal(id){$(id).classList.remove("on")}
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
+
+function leadValid(){const email=$("leadEmail").value.trim(),err=$("leadError");let msg="";if(email&&!/^\S+@\S+\.\S+$/.test(email))msg="Revisa el formato del email.";err.textContent=msg;err.style.display=msg?"block":"none";return!msg}
+function captureLead(){var k=selectedKam();lead={name:$("leadFullName").value.trim(),company:$("leadCompany").value.trim(),email:$("leadEmail").value.trim(),phone:$("leadPhone").value.trim(),project:$("leadProject").value.trim(),role:$("leadRole").value.trim(),kam:{n:k.n,c:k.c,m:k.m,t:k.t}}}
+function renderTypes(){$("typologies").innerHTML=Object.entries(CASES).map(([k,c])=>`<button class="type ${state.case===k?"on":""}" data-case="${k}"><i class="diamond"></i><b>${esc(c.n)}</b><span>${esc(c.d)}</span><em>${c.unit?`${NUM(c.units)} ${esc(c.unitP)} × ${NUM(c.m2Unit)} m²`:`${NUM(c.m2)} m²`} · ${NUM(c.kgM2)} kg/m² · ${NUM(c.kgM3)} kg/m³</em></button>`).join("");document.querySelectorAll("[data-case]").forEach(b=>b.onclick=()=>{state=makeCase(b.dataset.case);savedId=null;renderAll()})}
+function quickFmt(v,stepN){
+  var n=Number(v)||0,s=Number(stepN)||1,d=0;
+  if(s>0&&s<1)d=Math.max(0,Math.ceil(-Math.log(s)/Math.LN10));
+  return n.toFixed(d).replace(".",",");
+}
+function numberCard(id,label,unit,value,stepN,quick=[],sourceKey="",note=""){
+  const src=sourceKey?`<div class="sourceLine"><span class="sourceTag ${(state._src&&state._src[sourceKey])==="client"?"client":""}">${srcLabel(sourceKey)}</span><button class="useRef" data-use-ref="${sourceKey}">No lo sé · usar referencia ACMA</button></div>`:"";
+  return`<div class="numCard"><div class="numTop"><label>${label}</label><span class="unit">${unit}</span></div><div class="stepper"><button data-dec="${id}">−</button><input id="${id}" type="number" step="${stepN}" value="${value}"><button data-inc="${id}">+</button></div>${quick.length?`<div class="quick">${quick.map(v=>`<button data-quick="${id}" data-v="${v}">${quickFmt(v,stepN)}</button>`).join("")}</div>`:""}${src}${note?`<div style="margin-top:7px;font-size:10px;line-height:1.45;color:var(--muted)">${esc(note)}</div>`:""}</div>`
+}
+function renderDimensions(){const c=state;syncFloorIncidence(c);document.querySelectorAll("[data-qmode]").forEach(b=>b.classList.toggle("on",b.dataset.qmode===c.modoCuantia));let h="";if(isBuildingCase(c.case))h+=numberCard("dimFloors","Cantidad de pisos","pisos",c.floors,1,[5,8,10,12,15,20],"floors");if(c.unit){h+=numberCard("dimUnits",`Cantidad de ${esc(c.unitP)}`,"unidades",c.units,1,[1,2,4,10,50]);const m2Label=isBuildingCase(c.case)?`m² totales por ${esc(c.unit)}`:`m² por ${esc(c.unit)}`;h+=numberCard("dimM2Unit",m2Label,"m² / unidad",c.m2Unit,25,m2UnitQuickValues(c));if(isBuildingCase(c.case))h+=`<div style="margin:-7px 2px 2px;padding:8px 10px;border-left:3px solid var(--orange);background:#FFF8EE;color:var(--slate);font-size:10px;line-height:1.45"><b style="color:var(--navy)">Accesos rápidos:</b> superficie total de una torre, calculada desde una planta tipo razonable × ${NUM(c.floors)} pisos.</div>`;}else h+=numberCard("dimM2","Superficie construida","m²",c.m2,100,[1000,5000,10000,20000]);if(c.modoCuantia==="m3"){h+=numberCard("dimConsHorm","Consumo de hormigón","m³ / m²",c.consHorm,0.01,[0.20,0.25,0.30,0.40],"consHorm","Referencia de modelación ACMA para traducir kg/m² ↔ kg/m³. Si no dispones del dato, mantenemos el valor del caso.");h+=numberCard("dimKgM3","Cuantía de acero","kg / m³",c.kgM3,1,[60,80,100,120],"kgM3");}else{h+=numberCard("dimKgM2","Cuantía de acero","kg / m²",c.kgM2,1,[12,20,30,40,50],"kgM2");h+=numberCard("dimConsHorm","Consumo de hormigón","m³ / m²",c.consHorm,0.01,[0.20,0.25,0.30,0.40],"consHorm","Referencia de modelación ACMA para traducir kg/m² ↔ kg/m³. Si no dispones del dato, mantenemos el valor del caso.");}$("dimensionInputs").innerHTML=h;
+  const bind=(id,k,delta,sourceKey="")=>{const e=$(id);if(!e)return;const changed=()=>{if(k==="floors")syncFloorIncidence(state);if(sourceKey)markClient(sourceKey);savedId=null};e.oninput=()=>{state[k]=Math.max(k==="floors"?1:0,+e.value||0);changed();renderDimensionSummary();renderDimensionsSources();if(k==="floors")bindAssumptions()};e.onchange=()=>{if(k==="floors")renderDimensions()};document.querySelector(`[data-dec="${id}"]`).onclick=()=>{state[k]=Math.max(k==="floors"?1:0,(+state[k]||0)-delta);changed();renderDimensions();if(k==="floors")bindAssumptions()};document.querySelector(`[data-inc="${id}"]`).onclick=()=>{state[k]=(+state[k]||0)+delta;changed();renderDimensions();if(k==="floors")bindAssumptions()};document.querySelectorAll(`[data-quick="${id}"]`).forEach(b=>b.onclick=()=>{state[k]=+b.dataset.v;changed();renderDimensions();if(k==="floors")bindAssumptions()})};
+  if(isBuildingCase(c.case))bind("dimFloors","floors",1,"floors");if(c.unit){bind("dimUnits","units",1);bind("dimM2Unit","m2Unit",10)}else bind("dimM2","m2",100);if(c.modoCuantia==="m3"){bind("dimConsHorm","consHorm",0.01,"consHorm");bind("dimKgM3","kgM3",1,"kgM3")}else{bind("dimKgM2","kgM2",1,"kgM2");bind("dimConsHorm","consHorm",0.01,"consHorm")}document.querySelectorAll("[data-use-ref]").forEach(b=>b.onclick=()=>resetRef(b.dataset.useRef));renderDimensionSummary()}
+function renderDimensionsSources(){document.querySelectorAll("[data-use-ref]").forEach(b=>{const tag=b.parentElement.querySelector(".sourceTag");if(tag){tag.textContent=srcLabel(b.dataset.useRef);tag.classList.toggle("client",(state._src&&state._src[b.dataset.useRef])==="client")}})}
+function renderDimensionSummary(){const m=model(),i=m.i,building=isBuildingCase(i.case);$("steelTon").innerHTML=`${NUM(i.pTon,1)}<span class="calcUnit">t</span>`;$("steelDesc").textContent=`${NUM(i.m2)} m² × ${NUM(i.kgM2,1)} kg/m² = ${NUM(i.pTon,1)} t de acero. Con ${NUM(i.consHorm,2)} m³/m² se estiman ${NUM(i.m3,0)} m³ de hormigón y una cuantía equivalente de ${NUM(i.kgM3,1)} kg/m³.${building?` Para ${NUM(i.floors)} pisos, la incidencia de ruta crítica usada es ${NUM(i.incRc,1)}%.`:""}`;$("sumM2").textContent=NUM(i.m2)+" m²";$("sumKgM2").textContent=NUM(i.kgM2,1)+" kg/m²";$("sumConcreteM3").textContent=NUM(i.m3,0)+" m³";$("sumKgM3").textContent=NUM(i.kgM3,1)+" kg/m³";$("rowFloors").style.display=building?"flex":"none";$("rowIncidence").style.display=building?"flex":"none";$("sumFloors").textContent=building?NUM(i.floors)+" pisos":"—";$("sumIncidence").textContent=building?NUM(i.incRc,1)+"%":"—";$("sumMesh").textContent=NUM(m.kgMalla/1000,1)+" t"}
+function dataCard(k,label,unit,note){const money=MONEY_KEYS.has(k),val=money?MONEY_TEXT(state[k]):state[k];return`<div class="dataCard"><div class="dataCardTop"><div><b>${label}</b><small>${note}</small></div></div><div class="dataInput"><input type="${money?"text":"number"}" ${money?'inputmode="numeric" class="moneyInput"':''} data-vkey="${k}" value="${val}"><span class="du">${unit}</span></div><div class="sourceLine"><span class="sourceTag ${(state._src&&state._src[k])==="client"?"client":""}">${srcLabel(k)}</span><button class="useRef" data-vref="${k}">No lo sé · usar referencia ACMA</button></div></div>`}
+function bindAssumptions(){syncFloorIncidence(state);$("validationGrid").innerHTML=dataCard("dotTrad","Cuadrilla habitual de enfierradura","personas","Número de enfierradores que normalmente trabajan simultáneamente en la partida.")+dataCard("indivTrad","Productividad actual","kg / persona-día","Producción aproximada por enfierrador y jornada antes de industrializar.")+dataCard("ggDia","Gasto general diario","$ / día","Costo diario de estructura de obra. Si no lo conocen, usamos la referencia del caso.")+dataCard("cAcero","Precio actual de barra","$ / kg","Precio efectivo o aproximado que hoy paga el proyecto por el acero tradicional.");document.querySelectorAll("[data-vkey]").forEach(e=>{const k=e.dataset.vkey,money=MONEY_KEYS.has(k);if(money){e.onfocus=()=>{e.value=String(Math.round(state[k]||0));e.select()};e.onblur=()=>{e.value=MONEY_TEXT(state[k])}}e.oninput=()=>{state[k]=money?PARSE_MONEY(e.value):Math.max(0,+e.value||0);markClient(k);if(k==="dotTrad")state.dotInd=state.dotTrad;renderValidationSources();renderResult()}});document.querySelectorAll("[data-vref]").forEach(b=>b.onclick=()=>resetRef(b.dataset.vref));["pctSust","efMalla","fHom","lossTrad","dotInd","traspaso"].forEach(k=>{const e=$(k);if(!e)return;e.value=state[k];e.oninput=()=>{state[k]=+e.value||0;savedId=null;renderResult()}});["cMallaFija","cMoTrad"].forEach(k=>{const e=$(k);if(!e)return;e.value=MONEY_TEXT(state[k]);e.onfocus=()=>{e.value=String(Math.round(state[k]||0));e.select()};e.oninput=()=>{state[k]=PARSE_MONEY(e.value);savedId=null;renderResult()};e.onblur=()=>{e.value=MONEY_TEXT(state[k])}});const ie=$("incRc"),ih=$("incRcHelp");if(isBuildingCase(state.case)){ie.value=NUM(incidenceFromFloors(state.floors),1).replace(",",".");ie.readOnly=true;ie.classList.add("derivedInput");ih.textContent=`Derivada automáticamente de ${NUM(state.floors)} pisos mediante interpolación lineal de las referencias del modelo.`;ie.oninput=null}else{ie.value=state.incRc;ie.readOnly=false;ie.classList.remove("derivedInput");ih.textContent="Supuesto de modelación para esta tipología.";ie.oninput=()=>{state.incRc=+ie.value||0;savedId=null;renderResult()}}state.lossMalla=1;$("lossMalla").value=1;$("lossMalla").readOnly=true}
+function renderValidationSources(){document.querySelectorAll("[data-vref]").forEach(b=>{const tag=b.parentElement.querySelector(".sourceTag");if(tag){tag.textContent=srcLabel(b.dataset.vref);tag.classList.toggle("client",(state._src&&state._src[b.dataset.vref])==="client")}})}
+function renderAssumptionValues(){}
+function renderProgress(){document.querySelectorAll("[data-p]").forEach(n=>{const p=+n.dataset.p;n.classList.toggle("done",step>p);n.classList.toggle("on",step===p)});document.querySelectorAll("[data-l]").forEach(l=>l.classList.toggle("done",step>+l.dataset.l));$("progressWrap").style.visibility=(step===0||step===5)?"hidden":"visible"}
+function showStep(n){step=Math.max(0,Math.min(5,n));document.querySelectorAll(".gate").forEach(g=>g.classList.toggle("active",+g.dataset.step===step));renderProgress();const labels=["Datos del visitante","Proyecto","Dimensión","Datos de obra","Resultado","Gracias"];$("stepText").textContent=labels[step];$("backBtn").style.visibility=(step===0||step===5)?"hidden":"visible";$("nextBtn").className="btn "+(step>=4?"orange":"primary");$("nextBtn").textContent=step===0?"Comenzar":step===1?"Continuar":step===2?"Continuar":step===3?"Ver resultado":step===4?"Finalizar":"Nueva simulación";if(step===4){renderResult();autoSaveAttempt()}var activeGate=document.querySelector(`.gate[data-step="${step}"]`);if(activeGate&&activeGate.scrollTo)activeGate.scrollTo(0,0)}
+function autoSaveAttempt(){if(!lead||savedId)return;const rec=saveCurrent();if(!rec)return;rec.sendStatus="Auto guardada · resultado";rec.autoSavedAt=nowIso();persist();$("savedBox").innerHTML=`<b>Evaluación ${esc(rec.publicId||rec.id)} registrada.</b> Guardando en el historial central de ACMA…`;$("savedBox").classList.add("show");syncRecord(rec);}
+function next(){if(step===0){if(!leadValid())return;captureLead();renderSession();showStep(1);return}if(step===5){newSimulation(true);return}showStep(step+1)}
+function renderSession(){if(lead){const identity=[lead.name,lead.company].filter(Boolean).join(" · ")||"Visitante anónimo";$("sessionName").textContent=identity;$("sessionMeta").textContent=lead.project||lead.email||"Simulación sin datos de contacto"}else{$("sessionName").textContent="Nueva simulación";$("sessionMeta").textContent="Paso a paso"}}
+function renderAll(){renderTypes();renderDimensions();bindAssumptions();renderSession();renderResult();document.querySelectorAll("[data-qmode]").forEach(b=>b.onclick=()=>{const r=resolved(state),target=b.dataset.qmode;if(target==="m3"&&state.modoCuantia!=="m3"){state.kgM3=r.kgM3;state._src.kgM3="derived"}if(target==="m2"&&state.modoCuantia!=="m2"){state.kgM2=r.kgM2;state._src.kgM2="derived"}state.modoCuantia=target;savedId=null;renderDimensions()});$("eventLabel").textContent=config.event+" · Evaluación preliminar"}
+
+function renderResult(){const m=model(),c=CASES[state.case],good=m.saving>=0,vc=clientFields().length;$("resultTitle").textContent=(lead&&lead.project)?lead.project:c.n;$("heroSaving").textContent=CLP(Math.abs(m.saving));$("heroSaving").classList.toggle("neg",!good);$("heroCaption").textContent=good?"Ahorro TCO estimado":"Mayor TCO estimado";$("mPct").textContent=(m.pct<0?"−":"")+NUM(Math.abs(m.pct),1)+"%";$("mDays").textContent=(m.dDays<0?"−":"")+NUM(Math.abs(m.dDays),1);$("mJh").textContent=(m.dJh<0?"−":"")+NUM(Math.abs(m.dJh),0);$("resultSentence").innerHTML=`Para <b>${NUM(m.i.m2)} m²</b>, <b>${NUM(m.i.m3,0)} m³ de hormigón</b> y <b>${NUM(m.i.pTon,1)} t</b> de acero estimadas (<b>${NUM(m.i.kgM2,1)} kg/m²</b> · <b>${NUM(m.i.kgM3,1)} kg/m³</b>), el escenario modelado con malla pasa de <b>${CLP(m.totT)}</b> a <b>${CLP(m.totI)}</b> en TCO considerado.${isBuildingCase(m.i.case)?` Para <b>${NUM(m.i.floors)} pisos</b>, la incidencia de ruta crítica aplicada es <b>${NUM(m.i.incRc,1)}%</b>.`:""} ${m.dDays>=0?`La partida libera <b>${NUM(m.dDays,1)} días</b>.`:`La partida agrega <b>${NUM(-m.dDays,1)} días</b>.`}<br><span class="validatedStat">${vc} dato${vc===1?"":"s"} validado${vc===1?"":"s"} directamente por el cliente</span>`;var liveLead=lead||{},liveKam=(liveLead&&liveLead.kam)?liveLead.kam:selectedKam();
+$("finalTools").innerHTML=`<div style="grid-column:1/-1;border:1px solid var(--rule);background:#F8FAFD;padding:10px 12px;font-size:10px;line-height:1.5;color:var(--slate)"><b style="color:var(--navy)">Destino del resumen</b><br>Cliente: <span id="resultRecipient">${esc(liveLead.email||"Sin email cargado")}</span><br>CC KAM: ${esc(liveKam.m||"—")}</div><button class="btn green" id="emailSummaryBtn">Enviar TCO por correo + PDF</button><button class="btn ghost" id="generatePdfBtn">Generar PDF</button><button class="btn ghost" id="shareSummaryBtn">Compartir PDF</button>`;
+$("finalTools").classList.add("show");
+$("emailSummaryBtn").onclick=emailSummary;$("generatePdfBtn").onclick=generatePdf;$("shareSummaryBtn").onclick=shareSummary;renderChart()}
+function renderChart(){const m=model();document.querySelectorAll("[data-chart]").forEach(b=>b.classList.toggle("on",b.dataset.chart===activeChart));if(activeChart==="bridge"){$("graphTitle").textContent="Cómo se construye la diferencia";$("graphDesc").textContent="Rojo aumenta el costo; verde lo reduce. El último total cierra exactamente con el resultado mostrado.";renderBridge(m)}else if(activeChart==="time"){$("graphTitle").textContent="Plazo de la partida";$("graphDesc").textContent="Días estimados de ejecución con la dotación declarada en cada escenario.";renderTime(m)}else if(activeChart==="mix"){$("graphTitle").textContent="Composición del costo considerado";$("graphDesc").textContent="Material, instalación, pérdidas y gasto general imputado al plazo; cada columna suma el total del escenario.";renderMix(m)}else if(activeChart==="sensitivity"){$("graphTitle").textContent="Qué variables mueven más el resultado";$("graphDesc").textContent="Cada fila recalcula la simulación dos veces: ese único factor se lleva a −10% y +10% de su valor actual, manteniendo todos los demás constantes. El spread entre ambos extremos muestra cuánto se mueve el ahorro estimado.";renderSensitivity(m)}else{$("graphTitle").textContent="Dónde se da vuelta la comparación";$("graphDesc").textContent="Mueve un supuesto a la vez. El cruce con ahorro $0 es el punto de equilibrio: sobre o bajo ese valor cambia la conveniencia del escenario.";renderBreakEven(m)}}
+function renderBridge(m){const steps=[["Actual",m.totT,"abs"],["Material",m.matI-m.matT,"d"],["Instalación",m.instI-m.instT,"d"],["Pérdidas",m.lossI-m.lossT,"d"],["Plazo",m.ggI-m.ggT,"d"],["Con malla",m.totI,"abs"]];let run=0;const bars=steps.map(([n,v,t])=>{if(t==="abs"){run=v;return{n,v,t,a:0,b:v}}const a=run;run+=v;return{n,v,t,a,b:run}}),W=900,H=300,L=55,R=12,T=34,B=58,max=Math.max(...bars.flatMap(x=>[x.a,x.b]),1)*1.08,Y=v=>T+(1-v/max)*(H-T-B),bw=(W-L-R)/bars.length;let s=`<svg viewBox="0 0 ${W} ${H}" role="img">`;for(let k=0;k<5;k++){const v=max*k/4;s+=`<line x1="${L}" y1="${Y(v)}" x2="${W-R}" y2="${Y(v)}" stroke="#EDF1F6"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end" font-size="9" fill="#91A0B9">${NUM(v/1e6)}</text>`}bars.forEach((b,k)=>{const x=L+k*bw+bw*.18,w=bw*.64,y=Y(Math.max(b.a,b.b)),h=Math.max(2,Math.abs(Y(b.a)-Y(b.b))),col=b.t==="abs"?"#09266A":b.v>0?"#B42318":"#0E7A3C",lab=b.t==="abs"?CLP(b.v):(b.v>0?"+":"−")+CLP(Math.abs(b.v));s+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${col}"/><text x="${x+w/2}" y="${Math.max(16,y-7)}" text-anchor="middle" font-size="8.3" font-weight="700" fill="${col}">${esc(lab)}</text><text x="${x+w/2}" y="${H-B+20}" text-anchor="middle" font-size="9.5" fill="#64728C">${esc(b.n)}</text>`});s+=`<text x="11" y="15" font-size="9" fill="#91A0B9">MM $</text></svg>`;$("chart").innerHTML=s}
+function renderTime(m){const W=850,H=260,L=130,R=25,T=42,B=44,max=Math.max(m.daysT,m.daysI,1)*1.08,X=v=>L+v/max*(W-L-R);let s=`<svg viewBox="0 0 ${W} ${H}">`;[0,.25,.5,.75,1].forEach(f=>{const d=max*f;s+=`<line x1="${X(d)}" y1="${T-15}" x2="${X(d)}" y2="${H-B}" stroke="#EDF1F6"/><text x="${X(d)}" y="${H-B+18}" text-anchor="middle" font-size="9" fill="#91A0B9">${NUM(d)}</text>`});[["Actual",m.daysT,"#64728C",state.dotTrad],["Con malla",m.daysI,"#0E7A3C",state.dotInd]].forEach((r,i)=>{const y=T+i*78;s+=`<text x="${L-12}" y="${y+18}" text-anchor="end" font-size="11" font-weight="700" fill="#09266A">${r[0]}</text><text x="${L-12}" y="${y+35}" text-anchor="end" font-size="9" fill="#91A0B9">${NUM(r[3])} pers.</text><rect x="${L}" y="${y}" width="${Math.max(2,X(r[1])-L)}" height="42" fill="${r[2]}"/><text x="${L+12}" y="${y+26}" font-size="11" font-weight="800" fill="#fff">${NUM(r[1],1)} días</text>`});if(m.dDays>0)s+=`<line x1="${X(m.daysI)}" y1="${T+118}" x2="${X(m.daysT)}" y2="${T+118}" stroke="#F28C18" stroke-width="3"/><text x="${(X(m.daysI)+X(m.daysT))/2}" y="${T+143}" text-anchor="middle" font-size="10" font-weight="800" fill="#F28C18">${NUM(m.dDays,1)} días liberados</text>`;s+=`</svg>`;$("chart").innerHTML=s}
+function renderMix(m){const W=850,H=300,T=42,B=48,bw=145,cols=[{x:250,l:"Actual",tot:m.totT,seg:[["Material",m.matT,"#09266A"],["Instalación",m.instT,"#365AB8"],["Pérdidas",m.lossT,"#91A0B9"],["GG",m.ggT,"#F28C18"]]},{x:475,l:"Con malla",tot:m.totI,seg:[["Material",m.matI,"#09266A"],["Instalación",m.instI,"#365AB8"],["Pérdidas",m.lossI,"#91A0B9"],["GG",m.ggI,"#F28C18"]]}],top=Math.max(m.totT,m.totI,1)*1.03,h=v=>v/top*(H-T-B);let s=`<svg viewBox="0 0 ${W} ${H}">`;cols.forEach(c=>{let acc=0;s+=`<text x="${c.x+bw/2}" y="${T-14}" text-anchor="middle" font-size="11" font-weight="800" fill="#09266A">${c.l} · ${esc(CLP(c.tot))}</text>`;c.seg.forEach(([n,v,col])=>{const hh=h(v),y=H-B-acc-hh;acc+=hh;s+=`<rect x="${c.x}" y="${y}" width="${bw}" height="${Math.max(1,hh)}" fill="${col}"/>`;if(hh>22)s+=`<text x="${c.x+bw/2}" y="${y+hh/2+4}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#fff">${NUM(v/c.tot*100)}%</text>`})});[["Material","#09266A"],["Instalación","#365AB8"],["Pérdidas","#91A0B9"],["Gasto general","#F28C18"]].forEach((a,i)=>s+=`<rect x="35" y="${65+i*25}" width="12" height="12" fill="${a[1]}"/><text x="54" y="${75+i*25}" font-size="9.5" fill="#64728C">${a[0]}</text>`);s+=`<line x1="30" y1="${H-B}" x2="${W-25}" y2="${H-B}" stroke="#DCE2EC"/></svg>`;$("chart").innerHTML=s}
+
+
+function renderSensitivity(m){
+  const base=m.saving;
+  const pct=(v)=>Math.max(0,Math.min(100,v));
+  const defs=[
+    {n:"Precio malla",k:"cMallaFija",base:+state.cMallaFija||0,fmt:v=>"$"+NUM(v)+"/kg"},
+    {n:"Productividad malla",k:"efMalla",base:+state.efMalla||0,cap:true,fmt:v=>NUM(v,1)+"%"},
+    {n:"% sustituible",k:"pctSust",base:+state.pctSust||0,cap:true,fmt:v=>NUM(v,1)+"%"},
+    {n:"GG diario",k:"ggDia",base:+state.ggDia||0,fmt:v=>"$"+NUM(v)+"/día"},
+    {n:"Ruta crítica",k:"incRc",base:+state.incRc||0,cap:true,analysis:true,fmt:v=>NUM(v,1)+"%"}
+  ].map(d=>{
+    let lo=d.base*.90,hi=d.base*1.10;
+    if(d.cap){lo=pct(lo);hi=pct(hi)}
+    let a={...state,[d.k]:lo},b={...state,[d.k]:hi};
+    if(d.analysis){a._analysisNoFloorSync=true;b._analysisNoFloorSync=true}
+    return{...d,lo,hi,svLo:model(a).saving,svHi:model(b).saving}
+  }).sort((a,b)=>Math.abs(b.svHi-b.svLo)-Math.abs(a.svHi-a.svLo));
+  const vals=[base,...defs.flatMap(d=>[d.svLo,d.svHi])],min0=Math.min(...vals),max0=Math.max(...vals),pad=Math.max((max0-min0)*.12,1e6),min=min0-pad,max=max0+pad;
+  const W=920,H=382,L=220,R=55,T=64,B=60,X=v=>L+(v-min)/(max-min)*(W-L-R),rowH=52,fmtMM=v=>(v<0?"−":"")+"$"+NUM(Math.abs(v)/1e6,1)+" MM";
+  let s=`<div style="border:1px solid #DCE2EC;background:#F7F9FC;padding:9px 11px;margin-bottom:10px;font-size:10px;line-height:1.45;color:#64728C"><b style="color:#09266A">Cómo leerlo:</b> valor actual = 100%. Para cada fila se calcula un escenario al <b>90%</b> y otro al <b>110%</b> de ese factor. Todos los demás supuestos quedan iguales. La distancia entre ambos extremos es el <b>spread de sensibilidad</b>.</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Sensibilidad del ahorro con variación de más y menos diez por ciento">`;
+  for(let k=0;k<5;k++){
+    const v=min+(max-min)*k/4;
+    s+=`<line x1="${X(v)}" y1="${T-18}" x2="${X(v)}" y2="${H-B}" stroke="#EDF1F6"/><text x="${X(v)}" y="${H-B+18}" text-anchor="middle" font-size="9" fill="#64728C">${fmtMM(v)}</text>`
+  }
+  s+=`<line x1="${X(base)}" y1="${T-24}" x2="${X(base)}" y2="${H-B}" stroke="#F28C18" stroke-width="2"/><text x="${X(base)}" y="20" text-anchor="middle" font-size="9.5" font-weight="800" fill="#F28C18">BASE ${esc(CLP(base))}</text>`;
+  defs.forEach((d,i)=>{
+    const y=T+i*rowH+7,vals2=[d.svLo,d.svHi];
+    s+=`<text x="${L-12}" y="${y+7}" text-anchor="end" font-size="10" font-weight="800" fill="#09266A">${esc(d.n)}</text><text x="${L-12}" y="${y+21}" text-anchor="end" font-size="8.2" fill="#64728C">−10% ${esc(d.fmt(d.lo))} · +10% ${esc(d.fmt(d.hi))}</text>`;
+    vals2.forEach(v=>{
+      const x0=X(base),x1=X(v),x=Math.min(x0,x1),w=Math.max(2,Math.abs(x1-x0)),col=v>=base?"#0E7A3C":"#B42318";
+      s+=`<rect x="${x}" y="${y}" width="${w}" height="10" rx="2" fill="${col}" opacity=".82"/><circle cx="${x1}" cy="${y+5}" r="4" fill="${col}"/>`
+    });
+    s+=`<text x="${X(d.svLo)}" y="${y+34}" text-anchor="middle" font-size="8.5" fill="#64728C">${esc(CLP(d.svLo))}</text><text x="${X(d.svHi)}" y="${y+34}" text-anchor="middle" font-size="8.5" fill="#64728C">${esc(CLP(d.svHi))}</text>`
+  });
+  s+=`<text x="12" y="16" font-size="9" fill="#64728C">Eje X: ahorro estimado · millones de pesos (CLP)</text></svg>`;
+  $("chart").innerHTML=s
+}
+let equilibriumDriver="incRc";
+const EQ_DRIVERS={
+  incRc:{
+    label:"Incidencia en ruta crítica",unit:"%",min:0,max:100,
+    get:s=>+s.incRc||0,
+    patch:(s,v)=>({...s,_analysisNoFloorSync:true,incRc:v}),
+    fmt:v=>NUM(v,1)+"%"
+  },
+  cMallaFija:{
+    label:"Precio malla",unit:"$/kg",min:600,max:1600,
+    get:s=>+s.cMallaFija||0,
+    patch:(s,v)=>({...s,cMallaFija:v}),
+    fmt:v=>"$"+NUM(v)+"/kg"
+  },
+  fHom:{
+    label:"Factor de homologación",unit:"%",min:80,max:125,
+    get:s=>+s.fHom||100,
+    patch:(s,v)=>({...s,fHom:v}),
+    fmt:v=>NUM(v,1)+"%"
+  },
+  ggDia:{
+    label:"Gasto general diario",unit:"$/día",min:0,max:s=>Math.max(6000000,(+s.ggDia||0)*2.2),
+    get:s=>+s.ggDia||0,
+    patch:(s,v)=>({...s,ggDia:v}),
+    fmt:v=>"$"+NUM(v)+"/día"
+  },
+  efMalla:{
+    label:"Ganancia de productividad malla",unit:"%",min:0,max:80,
+    get:s=>+s.efMalla||0,
+    patch:(s,v)=>({...s,efMalla:v}),
+    fmt:v=>NUM(v,1)+"%"
+  },
+  cMoTrad:{
+    label:"Costo de instalación",unit:"$/kg",min:200,max:700,
+    get:s=>+s.cMoTrad||0,
+    patch:(s,v)=>({...s,cMoTrad:v}),
+    fmt:v=>"$"+NUM(v)+"/kg"
+  }
+};
+
+function eqThresholds(m){
+  const dDirect=(m.matT-m.matI)+(m.instT-m.instI)+(m.lossT-m.lossI);
+  const ggBE=(m.dDays>0&&m.i.incRc>0)?(-dDirect)/((m.i.incRc/100)*m.dDays):NaN;
+  const incBE=(m.dDays>0&&m.i.ggDia>0)?((-dDirect)/(m.i.ggDia*m.dDays))*100:NaN;
+  const cMallaBE=m.kgMalla>0
+    ?(m.totT-m.kgBarraInd*m.i.cAcero*(1+m.i.lossTrad/100)-m.instI-m.ggI)/
+      (m.kgMalla*(1+m.i.lossMalla/100))
+    :NaN;
+  return{dDirect,ggBE,incBE,cMallaBE};
+}
+function eqScenarioSaving(driver,val){
+  const d=EQ_DRIVERS[driver],s=d.patch({...state},val);
+  return model(s).saving;
+}
+function findEquilibrium(driver){
+  const d=EQ_DRIVERS[driver],min=typeof d.min==="function"?d.min(state):d.min,max=typeof d.max==="function"?d.max(state):d.max,N=160;
+  let prevV=min,prevS=eqScenarioSaving(driver,min),best=null;
+  for(let i=1;i<=N;i++){
+    const v=min+(max-min)*i/N,s=eqScenarioSaving(driver,v);
+    if(s===0){best=v;break}
+    if((prevS<0&&s>0)||(prevS>0&&s<0)){
+      let lo=prevV,hi=v,flo=prevS;
+      for(let j=0;j<48;j++){
+        const mid=(lo+hi)/2,fm=eqScenarioSaving(driver,mid);
+        if((flo<=0&&fm<=0)||(flo>=0&&fm>=0)){lo=mid;flo=fm}else hi=mid
+      }
+      const cross=(lo+hi)/2;
+      const cur=d.get(state);
+      if(best===null||Math.abs(cross-cur)<Math.abs(best-cur))best=cross;
+    }
+    prevV=v;prevS=s;
+  }
+  return{value:best,min,max,current:d.get(state)};
+}
+function renderBreakEven(m){
+  const d=EQ_DRIVERS[equilibriumDriver]||EQ_DRIVERS.incRc;
+  const eq=findEquilibrium(equilibriumDriver),N=80;
+  const pts=Array.from({length:N+1},(_,i)=>{
+    const val=eq.min+(eq.max-eq.min)*i/N;
+    return{val,saving:eqScenarioSaving(equilibriumDriver,val)}
+  });
+  const vals=pts.map(p=>p.saving),absMax=Math.max(1,...vals.map(v=>Math.abs(v)));
+  const W=900,H=300,L=82,R=28,T=34,B=62;
+  const X=v=>L+(v-eq.min)/(eq.max-eq.min)*(W-L-R);
+  const Y=v=>T+(1-(v+absMax)/(2*absMax))*(H-T-B);
+  const path=pts.map((p,i)=>(i?"L":"M")+X(p.val)+" "+Y(p.saving)).join(" ");
+  let s=`<div style="display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px">`;
+  Object.entries(EQ_DRIVERS).forEach(([k,x])=>{
+    s+=`<button data-eq-driver="${k}" style="border:1px solid ${k===equilibriumDriver?"#09266A":"#DCE2EC"};background:${k===equilibriumDriver?"#09266A":"#fff"};color:${k===equilibriumDriver?"#fff":"#64728C"};font:700 10px inherit;padding:6px 9px;cursor:pointer">${esc(x.label)}</button>`
+  });
+  s+=`</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Ahorro según ${esc(d.label)}">`;
+  [0,.25,.5,.75,1].forEach(f=>{
+    const v=-absMax+2*absMax*f;
+    s+=`<line x1="${L}" y1="${Y(v)}" x2="${W-R}" y2="${Y(v)}" stroke="#EDF1F7"/><text x="${L-8}" y="${Y(v)+3}" text-anchor="end" font-size="9" fill="#64728C">${MM(v)}</text>`
+  });
+  s+=`<line x1="${L}" y1="${Y(0)}" x2="${W-R}" y2="${Y(0)}" stroke="#B42318" stroke-width="1.5" stroke-dasharray="5 4"/><text x="${W-R}" y="${Y(0)-7}" text-anchor="end" font-size="9" font-weight="800" fill="#B42318">Ahorro $0</text>`;
+  s+=`<path d="${path}" fill="none" stroke="#09266A" stroke-width="3"/>`;
+  [0,.25,.5,.75,1].forEach(f=>{
+    const v=eq.min+(eq.max-eq.min)*f;
+    s+=`<line x1="${X(v)}" y1="${H-B}" x2="${X(v)}" y2="${H-B+6}" stroke="#91A0B9"/><text x="${X(v)}" y="${H-B+20}" text-anchor="middle" font-size="9" fill="#64728C">${esc(d.fmt(v))}</text>`
+  });
+  const curSaving=eqScenarioSaving(equilibriumDriver,eq.current);
+  s+=`<line x1="${X(eq.current)}" y1="${T}" x2="${X(eq.current)}" y2="${H-B}" stroke="#F28C18" stroke-width="2" stroke-dasharray="3 3"/><circle cx="${X(eq.current)}" cy="${Y(curSaving)}" r="6" fill="#F28C18" stroke="#fff" stroke-width="2"/><text x="${X(eq.current)}" y="${T-12}" text-anchor="middle" font-size="10" font-weight="800" fill="#F28C18">Hoy · ${esc(d.fmt(eq.current))}</text>`;
+  if(eq.value!==null&&isFinite(eq.value)){
+    s+=`<line x1="${X(eq.value)}" y1="${T}" x2="${X(eq.value)}" y2="${H-B}" stroke="#0E7A3C" stroke-width="2"/><circle cx="${X(eq.value)}" cy="${Y(0)}" r="6" fill="#0E7A3C" stroke="#fff" stroke-width="2"/><rect x="${Math.max(L,Math.min(W-R-158,X(eq.value)-79))}" y="${T+8}" width="158" height="24" rx="3" fill="#0E7A3C"/><text x="${Math.max(L+79,Math.min(W-R-79,X(eq.value)))}" y="${T+24}" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">Equilibrio · ${esc(d.fmt(eq.value))}</text>`
+  }
+  s+=`<text x="${L}" y="15" font-size="9" fill="#64728C">Eje Y: ahorro estimado · CLP</text><text x="${(L+W-R)/2}" y="${H-8}" text-anchor="middle" font-size="9" fill="#64728C">Eje X: ${esc(d.label)} · ${esc(d.unit)}</text></svg>`;
+  const th=eqThresholds(m);
+  const ggTxt=isFinite(th.ggBE)?(th.ggBE<=0?"Conviene incluso con GG $0/día":"$"+NUM(th.ggBE)+"/día"):"—";
+  const incTxt=isFinite(th.incBE)?(th.incBE<=0?"Conviene incluso con 0%":NUM(th.incBE,1)+"%"):"—";
+  const pTxt=isFinite(th.cMallaBE)?"$"+NUM(th.cMallaBE)+"/kg":"—";
+  s+=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
+    <div style="border:1px solid #DCE2EC;background:#fff;padding:11px 12px"><span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#64728C">Gasto general mínimo</span><strong style="display:block;margin-top:5px;font-size:18px;color:#09266A">${ggTxt}</strong><small style="display:block;margin-top:4px;color:#64728C;line-height:1.35">Umbral diario para que el ahorro de plazo compense la diferencia de costo directo.</small></div>
+    <div style="border:1px solid #DCE2EC;background:#fff;padding:11px 12px"><span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#64728C">Incidencia mínima en ruta crítica</span><strong style="display:block;margin-top:5px;font-size:18px;color:#09266A">${incTxt}</strong><small style="display:block;margin-top:4px;color:#64728C;line-height:1.35">Parte mínima del ahorro de días que debe impactar el plazo general para llegar a equilibrio.</small></div>
+    <div style="border:1px solid #DCE2EC;background:#fff;padding:11px 12px"><span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#64728C">Precio máximo de malla</span><strong style="display:block;margin-top:5px;font-size:18px;color:#09266A">${pTxt}</strong><small style="display:block;margin-top:4px;color:#64728C;line-height:1.35">Precio por kg al que el costo total con malla iguala al escenario tradicional.</small></div>
+  </div>`;
+  $("chart").innerHTML=s;
+  document.querySelectorAll("[data-eq-driver]").forEach(b=>b.onclick=()=>{equilibriumDriver=b.dataset.eqDriver;renderBreakEven(model())})
+}
+function localPublicId(){
+  var d=new Date(),ymd=d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0");
+  var rand="";
+  try{rand=crypto.randomUUID().replace(/-/g,"").slice(0,6).toUpperCase()}catch(e){rand=Math.random().toString(36).slice(2,8).toUpperCase()}
+  return "TCO-"+ymd+"-"+rand;
+}
+function refreshLeadFromForm(){
+  if(!$("leadEmail"))return lead||{};
+  captureLead();
+  return lead||{};
+}
+
+function buildSummary(rec){
+  var m=model(),r=rec&&rec.result?rec.result:{saving:m.saving,pct:m.pct,totT:m.totT,totI:m.totI,dDays:m.dDays,dJh:m.dJh,pTon:m.i.pTon,m2:m.i.m2,m3:m.i.m3||0,consHorm:m.i.consHorm||0,kgM2:m.i.kgM2||0,kgM3:m.i.kgM3||0,floors:m.i.floors||0,incRc:m.i.incRc||0};
+  var l=rec&&rec.lead?rec.lead:(lead||{}),caseName=rec&&rec.caseName?rec.caseName:CASES[state.case].n;
+  var k=rec&&rec.kam?rec.kam:(l.kam||selectedKam());
+  return "ACMA · Resumen TCO de enfierradura\n"+config.event+
+    "\n\nCliente: "+([l.name,l.company].filter(Boolean).join(" · ")||"Visitante")+
+    (l.project?"\nProyecto: "+l.project:"")+
+    "\nTipología: "+caseName+(r.floors?" · "+NUM(r.floors)+" pisos":"")+
+    "\nSuperficie: "+NUM(r.m2)+" m² · Acero estimado: "+NUM(r.pTon,1)+" t"+
+    ((+r.kgM3||0)>0?" · Cuantía: "+NUM(r.kgM2||0,1)+" kg/m² · "+NUM(r.kgM3,1)+" kg/m³":"")+
+    "\n\nTCO escenario tradicional: "+CLP(r.totT)+
+    "\nTCO escenario con malla: "+CLP(r.totI)+
+    "\nDiferencia TCO: "+CLP(r.saving)+" ("+NUM(r.pct,1)+"%)"+
+    "\nDías liberados en la partida: "+NUM(r.dDays,1)+
+    "\nJornadas-hombre liberadas: "+NUM(r.dJh,0)+
+    "\n\nKAM ACMA: "+k.n+" · "+k.m+" · "+k.t+
+    "\n\n"+config.closing+
+    "\n\nNota: simulación TCO preliminar; requiere validación de ingeniería, homologación estructural y precios vigentes. No representa el costo total de la obra gruesa.";
+}
+
+function escHtmlText(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]})}
+function printableReportHtml(rec){
+  var r=rec.result||{},l=rec.lead||{},k=rec.kam||{},summary=buildSummary(rec);
+  var lines=summary.split("\n").map(function(x){return "<div>"+escHtmlText(x||" ")+"</div>"}).join("");
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escHtmlText(rec.publicId||rec.id)}</title><style>
+  @page{size:A4;margin:18mm}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#13203F;margin:0}.head{border-bottom:4px solid #F28C18;padding-bottom:12px;margin-bottom:22px}.brand{font-size:26px;font-weight:900;color:#09266A}.folio{font-size:12px;color:#64728C;margin-top:5px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}.box{border:1px solid #DCE2EC;padding:12px}.box small{display:block;color:#64728C;font-weight:800;text-transform:uppercase;font-size:9px}.box b{display:block;color:#09266A;font-size:19px;margin-top:7px}.sec{margin-top:20px;font-size:10px;font-weight:900;color:#09266A;text-transform:uppercase;letter-spacing:.08em}.txt{font-size:11px;line-height:1.55;margin-top:8px}.foot{border-top:1px solid #DCE2EC;margin-top:26px;padding-top:10px;font-size:9px;color:#64728C}@media print{button{display:none!important}}</style></head><body>
+  <div class="head"><div class="brand">ACMA · TCO ENFIERRADURA</div><div class="folio">Evaluación ${escHtmlText(rec.publicId||rec.id)} · ${escHtmlText(fmtDate(rec.createdAt))}</div></div>
+  <div><b>${escHtmlText([l.name,l.company].filter(Boolean).join(" · ")||"Visitante")}</b>${l.project?"<br>Proyecto: "+escHtmlText(l.project):""}${l.email?"<br>Email: "+escHtmlText(l.email):""}<br>KAM ACMA: ${escHtmlText(k.n||"")} · ${escHtmlText(k.m||"")}</div>
+  <div class="grid"><div class="box"><small>TCO tradicional</small><b>${CLP(r.totT||0)}</b></div><div class="box"><small>TCO con malla</small><b>${CLP(r.totI||0)}</b></div><div class="box"><small>Diferencia TCO</small><b>${CLP(r.saving||0)}</b></div></div>
+  <div class="sec">Resumen de la evaluación</div><div class="txt">${lines}</div>
+  <div class="foot">Simulación TCO preliminar. Requiere validación de ingeniería, cubicación definitiva, homologación estructural y precios vigentes. No representa el costo total de la obra gruesa.</div>
+  <script>window.addEventListener("load",function(){setTimeout(function(){window.print()},250)})<\/script></body></html>`;
+}
+function localPrintPdf(rec){
+  var w=window.open("","_blank");
+  if(!w){alert("El navegador bloqueó la ventana del PDF. Permite ventanas emergentes para este sitio.");return false}
+  w.document.open();w.document.write(printableReportHtml(rec));w.document.close();return true
+}
+function refreshRecordForDelivery(){
+  refreshLeadFromForm();
+  if(!leadValid())return null;
+  var rec=saveCurrent();
+  if($("resultRecipient"))$("resultRecipient").textContent=(rec.lead&&rec.lead.email)||"Sin email cargado";
+  return rec;
+}
+async function generatePdf(){
+  var rec=refreshRecordForDelivery();if(!rec)return;
+  if(!cloudReady()){localPrintPdf(rec);mark(rec,"PDF local preparado");return}
+  try{
+    var btn=$("generatePdfBtn");if(btn){btn.disabled=true;btn.textContent="Generando…"}
+    await syncRecord(rec);
+    var x=await cloudApi("pdf",{client_id:rec.id});
+    rec.publicId=x.public_id||rec.publicId;rec.sendStatus="PDF generado";persist();renderHistory();
+    var a=document.createElement("a");a.href=x.signed_url;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+  }catch(e){
+    localPrintPdf(rec);
+    alert("No se pudo generar el PDF central. Abrí una versión imprimible de respaldo. Detalle: "+(e.message||e));
+  }finally{
+    var b=$("generatePdfBtn");if(b){b.disabled=false;b.textContent="Generar PDF"}
+  }
+}
+async function emailSummary(){
+  var rec=refreshRecordForDelivery();if(!rec)return;
+  var l=rec.lead||{},k=rec.kam||selectedKam();
+  if(!l.email){alert("Ingresa el email del cliente en la etapa 1 para enviar el TCO.");return}
+  if(!cloudReady()){
+    alert("El envío automático con PDF requiere que la web esté publicada y conectada al backend central. Puedes usar “Generar PDF” mientras configuras esa conexión.");
+    return
+  }
+  try{
+    var btn=$("emailSummaryBtn");if(btn){btn.disabled=true;btn.textContent="Enviando…"}
+    await syncRecord(rec);
+    var x=await cloudApi("send_email",{client_id:rec.id});
+    rec.publicId=x.public_id||rec.publicId;rec.sendStatus="Correo enviado · CC "+k.m;rec.emailSentAt=nowIso();persist();renderHistory();toast("Correo enviado con PDF y copia al KAM.");
+  }catch(e){alert("No se pudo enviar el correo: "+(e.message||e))}
+  finally{var b=$("emailSummaryBtn");if(b){b.disabled=false;b.textContent="Enviar TCO por correo + PDF"}}
+}
+async function shareSummary(){
+  var rec=refreshRecordForDelivery();if(!rec)return;
+  var l=rec.lead||{};
+  if(!cloudReady()){localPrintPdf(rec);mark(rec,"PDF local preparado");return}
+  try{
+    var btn=$("shareSummaryBtn");if(btn){btn.disabled=true;btn.textContent="Preparando PDF…"}
+    await syncRecord(rec);
+    var x=await cloudApi("pdf",{client_id:rec.id});
+    rec.publicId=x.public_id||rec.publicId;persist();
+    var resp=await fetch(x.signed_url),blob=await resp.blob(),file=new File([blob],(rec.publicId||rec.id)+".pdf",{type:"application/pdf"});
+    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({title:"ACMA · TCO "+(l.project||""),text:"Resumen TCO de la evaluación ACMA · "+(rec.publicId||rec.id),files:[file]});
+      rec.sendStatus="PDF compartido";persist();renderHistory();
+    }else{
+      var a=document.createElement("a");a.href=x.signed_url;a.target="_blank";a.rel="noopener";a.click();
+    }
+  }catch(e){alert("No se pudo preparar el PDF: "+(e.message||e))}
+  finally{var b=$("shareSummaryBtn");if(b){b.disabled=false;b.textContent="Compartir PDF"}}
+}
+
+function saveCurrent(){
+  var m=model(),validated=clientFields(),kam=(lead&&lead.kam)?lead.kam:selectedKam(),existing=savedId?history.find(function(r){return r.id===savedId}):null;
+  var common={
+    event:config.event,
+    advisor:kam.n,
+    kam:JSON.parse(JSON.stringify(kam)),
+    lead:JSON.parse(JSON.stringify(lead||{})),
+    caseName:CASES[state.case].n,
+    state:JSON.parse(JSON.stringify(state)),
+    validation:{sources:JSON.parse(JSON.stringify(state._src||{})),clientFields:validated},
+    result:{saving:m.saving,pct:m.pct,totT:m.totT,totI:m.totI,dDays:m.dDays,dJh:m.dJh,pTon:m.i.pTon,m2:m.i.m2,m3:m.i.m3||0,consHorm:m.i.consHorm||0,kgM2:m.i.kgM2||0,kgM3:m.i.kgM3||0,floors:m.i.floors||0,incRc:m.i.incRc||0}
+  };
+  if(existing){
+    Object.assign(existing,common,{updatedAt:nowIso()});
+    existing.publicId=existing.publicId||localPublicId();
+    existing.follow=existing.follow||{interest:"Sin clasificar",next:"Por definir",notes:""};
+    persist();
+    return existing;
+  }
+  var rec=Object.assign({
+    id:"SIM-"+Date.now().toString(36).toUpperCase(),
+    publicId:localPublicId(),
+    createdAt:nowIso(),
+    sendStatus:"Guardada",
+    follow:{interest:"Sin clasificar",next:"Por definir",notes:""}
+  },common);
+  history.unshift(rec);savedId=rec.id;persist();return rec
+}
+function mark(rec,status){if(!rec)return;rec.sendStatus=status;rec.updatedAt=nowIso();persist();renderHistory()}
+async function deleteRecord(id){if(!confirm("¿Eliminar esta simulación del historial?"))return;const r=history.find(function(x){return x.id===id});if(cloudReady()&&r){try{const pin=await requireAdminPin();await cloudApi("delete",{client_id:id},pin)}catch(e){alert("No se pudo eliminar del historial central: "+(e.message||e));return}}history=history.filter(function(x){return x.id!==id});persist();renderHistory()}
+function renderHistory(){const q=($("historySearch").value||"").toLowerCase(),rows=history.filter(r=>[(r.lead&&r.lead.name),(r.lead&&r.lead.company),(r.lead&&r.lead.project),r.caseName].join(" ").toLowerCase().includes(q));$("historyList").innerHTML=rows.length?rows.map(r=>`<div class="histItem"><div><b>${esc([(r.lead&&r.lead.name),(r.lead&&r.lead.company)].filter(Boolean).join(" · ")||"Visitante anónimo")}</b><div class="sub">${r.publicId?`<b>${esc(r.publicId)}</b> · `:""}${esc((r.lead&&r.lead.project)||r.caseName)} · ${esc(fmtDate(r.createdAt))}<br>${esc((r.lead&&r.lead.email)||(r.lead&&r.lead.phone)||"")} · ${esc((r.follow&&r.follow.interest)||"Sin clasificar")} · ${((r.validation&&r.validation.clientFields)||[]).length} datos cliente${r.kam&&r.kam.n?`<br>KAM: ${esc(r.kam.n)}`:""}</div></div><div><div class="money">${CLP((r.result&&r.result.saving)||0)}</div><div class="sub">${NUM((r.result&&r.result.pct)||0,1)}% · ${NUM((r.result&&r.result.dDays)||0,1)} días<br>${NUM((r.result&&r.result.kgM2)||0,1)} kg/m² · ${NUM((r.result&&r.result.kgM3)||0,1)} kg/m³${(r.result&&r.result.floors)?`<br>${NUM(r.result.floors)} pisos · incidencia ${NUM(r.result.incRc||0,1)}%`:""}</div></div><div class="acts"><button data-open="${r.id}">Abrir</button><button data-follow="${r.id}">Seguimiento</button><button data-del="${r.id}">Eliminar</button></div></div>`).join(""):`<div class="empty">Todavía no hay simulaciones guardadas.</div>`;document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>restore(b.dataset.open));document.querySelectorAll("[data-follow]").forEach(b=>b.onclick=()=>openFollow(b.dataset.follow));document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>deleteRecord(b.dataset.del))}
+function openFollow(id){const r=history.find(x=>x.id===id);if(!r)return;$("followId").value=id;$("followInterest").value=(r.follow&&r.follow.interest)||"Sin clasificar";$("followNext").value=(r.follow&&r.follow.next)||"Por definir";$("followNotes").value=(r.follow&&r.follow.notes)||"";openModal("followModal")}
+async function saveFollow(){const r=history.find(x=>x.id===$("followId").value);if(!r)return;r.follow={interest:$("followInterest").value,next:$("followNext").value,notes:$("followNotes").value.trim()};r.updatedAt=nowIso();persist();closeModal("followModal");renderHistory();if(cloudReady()){try{const pin=await requireAdminPin();await cloudApi("update_followup",{client_id:r.id,follow:r.follow},pin);toast("Seguimiento guardado en historial central.")}catch(e){toast("Seguimiento guardado localmente.")}}else toast("Seguimiento guardado.")}
+function restore(id){const r=history.find(x=>x.id===id);if(!r)return;lead=JSON.parse(JSON.stringify(r.lead));state=JSON.parse(JSON.stringify(r.state));const base=CASES[state.case]||CASES.altura15;state.modoCuantia=state.modoCuantia||"m2";state.consHorm=state.consHorm==null?base.consHorm:state.consHorm;state.kgM3=state.kgM3==null?base.kgM3:state.kgM3;state.floors=state.floors==null?base.floors:state.floors;state.lossMalla=1;state._src=state._src||{kgM2:"reference",consHorm:"reference",kgM3:"reference",floors:"reference",dotTrad:"reference",indivTrad:"reference",ggDia:"reference",cAcero:"reference"};if(state._src.floors===undefined)state._src.floors="reference";syncFloorIncidence(state);savedId=id;fillLead();if(r.kam){var ki=KAMS.findIndex(function(x){return x.m===r.kam.m});if(ki>=0&&$("leadKam"))$("leadKam").value=String(ki);renderKamMeta()}renderAll();showStep(4);closeModal("adminModal");toast("Simulación cargada.")}
+function fillLead(){if(!lead)return;$("leadFullName").value=lead.name||"";$("leadCompany").value=lead.company||"";$("leadEmail").value=lead.email||"";$("leadPhone").value=lead.phone||"";$("leadProject").value=lead.project||"";$("leadRole").value=lead.role||""}
+function csvCell(v){const s=String(v==null?"":v);return/[",\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function exportCSV(){const heads=["ID","Fecha","Evento","KAM","Email KAM","Nombre","Empresa","Cargo","Email","Teléfono","Proyecto","Tipología","Pisos","Incidencia ruta crítica %","m2","m3 hormigón","m3/m2 hormigón","kg/m2","kg/m3","Ton acero","Ahorro CLP","Ahorro %","Días liberados","JH liberadas","N° datos cliente","Campos validados","Fuente pisos","Fuente kg/m2","Fuente m3/m2","Fuente kg/m3","Fuente cuadrilla","Fuente productividad","Fuente GG","Fuente precio barra","Interés","Próximo paso","Notas","Estado"],rows=history.map(r=>{const src=(r.validation&&r.validation.sources)||(r.state&&r.state._src)||{},cf=(r.validation&&r.validation.clientFields)||[];return[r.id,r.createdAt,r.event,r.kam&&r.kam.n?r.kam.n:r.advisor,r.kam&&r.kam.m?r.kam.m:"",(r.lead&&r.lead.name),(r.lead&&r.lead.company),(r.lead&&r.lead.role),(r.lead&&r.lead.email),(r.lead&&r.lead.phone),(r.lead&&r.lead.project),r.caseName,(r.result&&r.result.floors)||(r.state&&r.state.floors)||"",(r.result&&r.result.incRc)||resolved(r.state||{}).incRc||"",(r.result&&r.result.m2),(r.result&&r.result.m3),(r.result&&r.result.consHorm),(r.result&&r.result.kgM2),(r.result&&r.result.kgM3),(r.result&&r.result.pTon),(r.result&&r.result.saving),(r.result&&r.result.pct),(r.result&&r.result.dDays),(r.result&&r.result.dJh),cf.length,cf.join(", "),src.floors,src.kgM2,src.consHorm,src.kgM3,src.dotTrad,src.indivTrad,src.ggDia,src.cAcero,(r.follow&&r.follow.interest),(r.follow&&r.follow.next),(r.follow&&r.follow.notes),r.sendStatus]});download("ACMA_historial_"+new Date().toISOString().slice(0,10)+".csv","\ufeff"+[heads,...rows].map(x=>x.map(csvCell).join(";")).join("\n"),"text/csv;charset=utf-8")}
+function newSimulation(force=false){if(!force&&lead&&!confirm("¿Iniciar una nueva simulación? El historial guardado no se borrará."))return;lead=null;state=makeCase("altura15");savedId=null;$("savedBox").classList.remove("show");["leadFullName","leadCompany","leadEmail","leadPhone","leadProject","leadRole"].forEach(function(id){$(id).value=""});initKams();renderAll();showStep(0)}
+
+$("nextBtn").onclick=next;$("backBtn").onclick=function(){showStep(step-1)};initKams();$("leadKam").onchange=renderKamMeta;
+document.querySelectorAll("[data-chart]").forEach(b=>b.onclick=()=>{activeChart=b.dataset.chart;renderChart()});
+$("saveFollowBtn").onclick=saveFollow;$("thanksNewBtn").onclick=()=>newSimulation(true);$("thanksAdminBtn").onclick=async()=>{fillSettings();openModal("adminModal");await loadCentralHistory()};
+if($("adminBtn"))$("adminBtn").onclick=async()=>{fillSettings();openModal("adminModal");await loadCentralHistory()};
+document.querySelectorAll("[data-admin]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-admin]").forEach(x=>x.classList.toggle("on",x===b));$("adminHistory").classList.toggle("on",b.dataset.admin==="history");$("adminConfig").classList.toggle("on",b.dataset.admin==="config")});
+$("historySearch").oninput=renderHistory;$("exportCsvBtn").onclick=exportCSV;$("exportJsonBtn").onclick=()=>download("ACMA_historial_backup.json",JSON.stringify({version:7,exportedAt:nowIso(),history},null,2),"application/json");
+$("importJson").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const x=JSON.parse(rd.result),arr=Array.isArray(x)?x:x.history;if(!Array.isArray(arr))throw 0;history=[...arr,...history].filter((r,i,a)=>a.findIndex(z=>z.id===r.id)===i);persist();renderHistory();toast("Backup importado.")}catch(err){alert("Archivo no compatible.")}};rd.readAsText(f);e.target.value=""};
+function fillSettings(){$("cfgEvent").value=config.event||"";$("cfgAdvisor").value=config.advisor||"";$("cfgEmail").value=config.email||"";$("cfgPhone").value=config.phone||"";$("cfgClosing").value=config.closing||""}
+$("saveSettingsBtn").onclick=()=>{config={event:$("cfgEvent").value.trim()||defaultConfig.event,advisor:$("cfgAdvisor").value.trim()||defaultConfig.advisor,email:$("cfgEmail").value.trim(),phone:$("cfgPhone").value.trim(),closing:$("cfgClosing").value.trim()||defaultConfig.closing,kamIndex:config.kamIndex||0};persistConfig();$("eventLabel").textContent=config.event+" · Evaluación preliminar";toast("Configuración guardada.")};
+
+window.addEventListener("load",function(){if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})});
+window.addEventListener("keydown",e=>{if(e.key==="ArrowRight"&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName))next();if(e.key==="ArrowLeft"&&step>0&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName))showStep(step-1)});
+initKams();renderAll();showStep(0);if(cloudReady()){setCloudStatus(navigator.onLine?"ok":"warn",navigator.onLine?"Web":"Sin conexión");flushPending()}else setCloudStatus("warn","Sin backend");window.addEventListener("online",flushPending);
+})();
+</script>
+</body>
+</html>
