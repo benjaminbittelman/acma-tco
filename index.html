@@ -297,12 +297,12 @@ body{min-width:0}
     <div class="modalHead"><h3>Acceso rápido · ACMA TCO</h3><button class="btn ghost small" data-close="qrModal">Cerrar</button></div>
     <div class="modalBody qrModalBody">
       <div class="qrKicker">ESCANEA Y ABRE LA HERRAMIENTA</div>
-      <img class="qrImage" src="qr-acma-tco.png" alt="Código QR para abrir ACMA TCO">
+      <img class="qrImage" src="qr-acma-tco-v16.png" alt="Código QR para abrir ACMA TCO">
       <p>Apunta la cámara del teléfono o tablet al código. Se abrirá directamente la herramienta TCO de ACMA.</p>
       <div class="qrUrl" id="qrUrlText">https://benjaminbittelman.github.io/acma-tco/</div>
       <div class="qrActions">
         <button type="button" class="btn primary small" id="copyQrLinkBtn">Copiar enlace</button>
-        <a class="btn ghost small" href="qr-acma-tco.png" download="ACMA_TCO_QR.png">Descargar QR</a>
+        <a class="btn ghost small" href="qr-acma-tco-v16.png" download="ACMA_TCO_QR.png">Descargar QR</a>
         <a class="btn ghost small" href="https://benjaminbittelman.github.io/acma-tco/" target="_blank" rel="noopener">Abrir enlace</a>
       </div>
     </div>
@@ -405,7 +405,7 @@ function renderKamMeta(){
 
 const EXTRA={traspaso:100,modoCuantia:"m2"};
 const KEYS={history:"acma_tco_feria_history_v3",config:"acma_tco_feria_config_v3"};
-const APP_VERSION="TCO WEB V15 · acceso por QR";
+const APP_VERSION="TCO WEB V16 · QR iOS corregido";
 const defaultConfig={event:"Feria Edifica 2026",advisor:"Equipo ACMA",email:"",phone:"",closing:"Gracias por visitar ACMA.",kamIndex:0};
 const CLOUD=window.ACMA_TCO_CONFIG||{};
 let adminPin="";try{adminPin=sessionStorage.getItem("acma_tco_admin_pin")||""}catch(e){}
