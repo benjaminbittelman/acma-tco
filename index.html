@@ -405,7 +405,7 @@ function renderKamMeta(){
 
 const EXTRA={traspaso:100,modoCuantia:"m2"};
 const KEYS={history:"acma_tco_feria_history_v3",config:"acma_tco_feria_config_v3"};
-const APP_VERSION="TCO WEB V16 · QR iOS corregido";
+const APP_VERSION="TCO WEB V17 · ayuda contextual y glosario";
 const defaultConfig={event:"Feria Edifica 2026",advisor:"Equipo ACMA",email:"",phone:"",closing:"Gracias por visitar ACMA.",kamIndex:0};
 const CLOUD=window.ACMA_TCO_CONFIG||{};
 let adminPin="";try{adminPin=sessionStorage.getItem("acma_tco_admin_pin")||""}catch(e){}
@@ -725,7 +725,7 @@ function printableReportHtml(rec){
   <div class="grid"><div class="box"><small>TCO tradicional</small><b>${CLP(r.totT||0)}</b></div><div class="box"><small>TCO con malla</small><b>${CLP(r.totI||0)}</b></div><div class="box"><small>Diferencia TCO</small><b>${CLP(r.saving||0)}</b></div></div>
   <div class="sec">Resumen de la evaluación</div><div class="txt">${lines}</div>
   <div class="foot">Simulación TCO preliminar. Requiere validación de ingeniería, cubicación definitiva, homologación estructural y precios vigentes. No representa el costo total de la obra gruesa.</div>
-  <script>window.addEventListener("load",function(){setTimeout(function(){window.print()},250)})<\/script></body></html>`;
+  <script>window.addEventListener("load",function(){setTimeout(function(){window.print()},250)})<\/script><script src="help.js"></script>\n</body></html>`;
 }
 function localPrintPdf(rec){
   var w=window.open("","_blank");
